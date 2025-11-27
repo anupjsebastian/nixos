@@ -15,13 +15,13 @@
 
     ## Applications
     ../../modules/apps/chrome.nix
-    ../../modules/apps/synology-drive.nix
+    # ../../modules/apps/synology-drive.nix
     ../../modules/apps/vlc.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
     ../../modules/dev/python.nix
-    # ../../modules/dev/flutter.nix
+    ../../modules/dev/flutter.nix
     # ../../modules/dev/web.nix
 
     ## Editors
@@ -29,7 +29,7 @@
     ../../modules/editor/neovim.nix
 
     ## Music Production Tools
-    ../../modules/music/bitwig.nix
+    # ../../modules/music/bitwig.nix
 
     ## System Configurations
     ../../modules/system/fonts.nix

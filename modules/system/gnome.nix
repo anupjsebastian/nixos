@@ -17,16 +17,19 @@
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
   };
 
-  # Install Ptyxis (modern GNOME terminal)
+  # Install terminals
   environment.systemPackages = with pkgs; [
     ptyxis
   ];
 
-  # Exclude default GNOME apps we don't need
+  # Exclude unwanted packages from the system
   environment.gnome.excludePackages = with pkgs; [
-    gnome-console # Old GNOME Console
-    gnome-terminal # Old GNOME Terminal
+    gnome-tour # Welcome tour
+    epiphany # Web browser
   ];
+
+  # Prevent xterm from being installed (pulled in by xserver)
+  services.xserver.excludePackages = with pkgs; [ xterm ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -42,28 +45,6 @@
         "org/gnome/mutter" = {
           experimental-features = [ "scale-monitor-framebuffer" ];
         };
-
-        # # Custom keyboard shortcuts
-        # "org/gnome/settings-daemon/plugins/media-keys" = {
-        #   custom-keybindings = [
-        #     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        #   ];
-        # };
-
-        # # Super+Enter: Open terminal
-        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        #   name = "Terminal";
-        #   command = "ptyxis";
-        #   binding = "<Super>Return";
-        # };
-
-        # Additional shortcut examples (uncomment and modify as needed)
-        # Example: VS Code shortcut (Super+C)
-        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-        #   name = "VS Code";
-        #   command = "code";
-        #   binding = "<Super>c";
-        # };
       };
     }
   ];
