@@ -67,14 +67,14 @@
           binding = "<Super>f";
         };
 
-        # Additional shortcut examples (uncomment and modify as needed)
-        # Example: Terminal shortcut (Super+T)
-        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-        #   name = "Terminal";
-        #   command = "gnome-terminal";
-        #   binding = "<Super>t";
-        # };
+        # Super+Enter: Open terminal
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+          name = "Terminal";
+          command = "ptyxis";
+          binding = "<Super>Return";
+        };
 
+        # Additional shortcut examples (uncomment and modify as needed)
         # Example: VS Code shortcut (Super+C)
         # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
         #   name = "VS Code";

@@ -44,6 +44,12 @@
   # Increase nix download buffer - to fix warning when downloading big packages
   nix.settings.download-buffer-size = 104857600; # 100MiB
 
+  # Enable automatic system upgrades (without auto-reboot)
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = false;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.consoleMode = "max"; # Use highest available resolution
