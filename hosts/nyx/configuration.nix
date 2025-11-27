@@ -2,30 +2,68 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  unstablePkgs,
+  ...
+}:
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+
+    ## Applications
+    ../../modules/apps/chrome.nix
+    # ../../modules/apps/synology-drive.nix
+    ../../modules/apps/vlc.nix
+
+    ## Development tools
+    ../../modules/dev/rust.nix
+    ../../modules/dev/python.nix
+    ../../modules/dev/flutter.nix
+    ../../modules/dev/web.nix
+
+    ## Editors
+    ../../modules/editor/vscode.nix
+    ../../modules/editor/neovim.nix
+
+    ## Music Production Tools
+    # ../../modules/music/bitwig.nix
+
+    ## System Configurations
+    ../../modules/system/fonts.nix
+    ../../modules/system/gnome.nix
+    ../../modules/system/network.nix
+    ../../modules/system/shell.nix
+    # ../../modules/system/niri.nix
+
+  ];
+
+  # Increase nix download buffer - to fix warning when downloading big packages
+  nix.settings.download-buffer-size = 104857600; # 100MiB
+
+  # Enable flakes and nix-command
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  # Enable automatic system upgrades (without auto-reboot)
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = false;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "max"; # Use highest available resolution
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nyx"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -43,19 +81,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -84,26 +109,26 @@
   users.users.anupjsebastian = {
     isNormalUser = true;
     description = "Anup Sebastian";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-    neovim
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
     gh
     git
+    nixfmt-rfc-style # Nix formatter
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
