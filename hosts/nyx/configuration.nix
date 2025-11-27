@@ -30,7 +30,7 @@ in
     # ../../modules/dev/web.nix
 
     ## Editors
-    ../../modules/editors/vscode.nix
+    ../../modules/editor/vscode.nix
     ../../modules/editor/neovim.nix
 
     ## Music Production Tools
