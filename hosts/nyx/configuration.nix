@@ -22,7 +22,7 @@
     ../../modules/dev/rust.nix
     ../../modules/dev/python.nix
     ../../modules/dev/flutter.nix
-    # ../../modules/dev/web.nix
+    ../../modules/dev/web.nix
 
     ## Editors
     ../../modules/editor/vscode.nix
