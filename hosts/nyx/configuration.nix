@@ -16,6 +16,7 @@
     ## Applications
     ../../modules/apps/chrome.nix
     ../../modules/apps/synology-drive.nix
+    ../../modules/apps/vlc.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
@@ -28,12 +29,13 @@
     ../../modules/editor/neovim.nix
 
     ## Music Production Tools
-    # ../../modules/music/bitwig.nix
+    ../../modules/music/bitwig.nix
 
     ## System Configurations
     ../../modules/system/fonts.nix
     ../../modules/system/gnome.nix
     ../../modules/system/network.nix
+    ../../modules/system/shell.nix
     # ../../modules/system/niri.nix
     # ../../modules/system/splash.nix
 
@@ -44,6 +46,7 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "max"; # Use highest available resolution
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.

@@ -3,7 +3,7 @@
   environment.systemPackages = [
     (unstablePkgs.vscode.override {
       commandLineArgs = [
-        "--ozone-platform-hint=auto"
+        "--ozone-platform=wayland"
       ];
     })
   ];

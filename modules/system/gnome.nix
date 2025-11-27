@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   # Enable display server infrastructure (required even for Wayland desktops).
   # This sets up GPU drivers, input handling, and XWayland compatibility.
@@ -11,6 +11,23 @@
 
   # Enable fractional scaling for GNOME
   services.xserver.displayManager.gdm.wayland = true;
+
+  # Force Qt and Electron apps to use Wayland by default
+  environment.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+  };
+
+  # Install Ptyxis (modern GNOME terminal)
+  environment.systemPackages = with pkgs; [
+    ptyxis
+  ];
+
+  # Exclude default GNOME apps we don't need
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-console # Old GNOME Console
+    gnome-terminal # Old GNOME Terminal
+  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -27,23 +44,39 @@
           experimental-features = [ "scale-monitor-framebuffer" ];
         };
 
-        # Custom keyboard shortcuts (examples - uncomment and modify as needed)
-        # "org/gnome/settings-daemon/plugins/media-keys" = {
-        #   custom-keybindings = [
-        #     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        #     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        #   ];
-        # };
+        # Custom keyboard shortcuts
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+          ];
+        };
 
+        # Super+B: Open default browser
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          name = "Browser";
+          command = "xdg-open http://";
+          binding = "<Super>b";
+        };
+
+        # Super+F: Open home folder
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+          name = "Home Folder";
+          command = "nautilus";
+          binding = "<Super>f";
+        };
+
+        # Additional shortcut examples (uncomment and modify as needed)
         # Example: Terminal shortcut (Super+T)
-        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
         #   name = "Terminal";
         #   command = "gnome-terminal";
         #   binding = "<Super>t";
         # };
 
         # Example: VS Code shortcut (Super+C)
-        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
         #   name = "VS Code";
         #   command = "code";
         #   binding = "<Super>c";

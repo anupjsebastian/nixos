@@ -1,1 +1,6 @@
-# Placeholder for bitwig module
+{ unstablePkgs, ... }:
+{
+  environment.systemPackages = [
+    unstablePkgs.bitwig-studio
+  ];
+}

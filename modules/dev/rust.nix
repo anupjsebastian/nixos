@@ -1,6 +1,6 @@
 { unstablePkgs, ... }:
 {
   environment.systemPackages = [
-    unstablePkgs.rustc
+    unstablePkgs.rustup
   ];
 }
