@@ -6,15 +6,14 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true; # Login Screen
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true; # Login Screen
+  services.desktopManager.gnome.enable = true;
 
   # Enable fractional scaling for GNOME
-  services.xserver.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.wayland = true;
 
-  # Force Qt and Electron apps to use Wayland by default
+  # Prefer Wayland for Electron apps (VS Code, etc.)
   environment.sessionVariables = {
-    QT_QPA_PLATFORM = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
   };
 
@@ -44,35 +43,19 @@
           experimental-features = [ "scale-monitor-framebuffer" ];
         };
 
-        # Custom keyboard shortcuts
-        "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-          ];
-        };
+        # # Custom keyboard shortcuts
+        # "org/gnome/settings-daemon/plugins/media-keys" = {
+        #   custom-keybindings = [
+        #     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        #   ];
+        # };
 
-        # Super+B: Open default browser
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-          name = "Browser";
-          command = "xdg-open http://";
-          binding = "<Super>b";
-        };
-
-        # Super+F: Open home folder
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-          name = "Home Folder";
-          command = "nautilus";
-          binding = "<Super>f";
-        };
-
-        # Super+Enter: Open terminal
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-          name = "Terminal";
-          command = "ptyxis";
-          binding = "<Super>Return";
-        };
+        # # Super+Enter: Open terminal
+        # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+        #   name = "Terminal";
+        #   command = "ptyxis";
+        #   binding = "<Super>Return";
+        # };
 
         # Additional shortcut examples (uncomment and modify as needed)
         # Example: VS Code shortcut (Super+C)

@@ -2,7 +2,7 @@
   description = "NixOS config for nyx";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # You can add more inputs later (home-manager, nixvim, etc.)
   };

@@ -44,6 +44,12 @@
   # Increase nix download buffer - to fix warning when downloading big packages
   nix.settings.download-buffer-size = 104857600; # 100MiB
 
+  # Enable flakes and nix-command
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # Enable automatic system upgrades (without auto-reboot)
   system.autoUpgrade = {
     enable = true;
