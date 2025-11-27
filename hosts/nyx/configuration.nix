@@ -27,7 +27,7 @@ in
     ../../modules/dev/rust.nix
     ../../modules/dev/python.nix
     # ../../modules/dev/flutter.nix
-    ../../modules/dev/web.nix
+    # ../../modules/dev/web.nix
 
     ## Editors
     ../../modules/editors/vscode.nix
@@ -79,11 +79,20 @@ in
   };
 
   # Enable the X11 windowing system.
+  # Required for any GUI Desktop env for compatibility.
+  # Gnome will use Wayland by default even if X11 is enabled.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true; # Login Screen
   services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.displayManager.sessionCommands = ''
+    gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+    gsettings set org.gnome.desktop.interface text-scaling-factor 1.0
+    gsettings set org.gnome.desktop.interface scaling-factor 1
+    gsettings set org.gnome.desktop.interface zoom-factor 1.5
+  '';
 
   # Configure keymap in X11
   services.xserver.xkb = {
