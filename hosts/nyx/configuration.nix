@@ -37,6 +37,9 @@
 
   ];
 
+  # Increase nix download buffer - to fix warning when downloading big packages
+  nix.settings.download-buffer-size = 104857600; # 100MiB
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -72,21 +75,29 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # Required for any GUI Desktop env for compatibility.
-  # Gnome will use Wayland by default even if X11 is enabled.
+  # Enable display server infrastructure (required even for Wayland desktops).
+  # This sets up GPU drivers, input handling, and XWayland compatibility.
+  # GNOME will use Wayland by default when available.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true; # Login Screen
   services.xserver.desktopManager.gnome.enable = true;
 
-  services.xserver.displayManager.sessionCommands = ''
-    gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
-    gsettings set org.gnome.desktop.interface text-scaling-factor 1.0
-    gsettings set org.gnome.desktop.interface scaling-factor 1
-    gsettings set org.gnome.desktop.interface zoom-factor 1.5
-  '';
+  # Enable fractional scaling for GNOME
+  services.xserver.displayManager.gdm.wayland = true;
+
+  # Enable experimental features including fractional scaling
+  programs.dconf.enable = true;
+  programs.dconf.profiles.user.databases = [
+    {
+      settings = {
+        "org/gnome/mutter" = {
+          experimental-features = [ "scale-monitor-framebuffer" ];
+        };
+      };
+    }
+  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -139,6 +150,7 @@
     wget
     gh
     git
+    nixfmt-rfc-style # Nix formatter
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
