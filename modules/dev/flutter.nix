@@ -13,7 +13,7 @@
     unstablePkgs.flutter
 
     # Chrome for Flutter web development
-    google-chrome
+    unstablePkgs.google-chrome
 
     # Git (required by Flutter)
     git

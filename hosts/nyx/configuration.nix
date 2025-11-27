@@ -37,7 +37,6 @@
     ../../modules/system/network.nix
     ../../modules/system/shell.nix
     # ../../modules/system/niri.nix
-    # ../../modules/system/splash.nix
 
   ];
 
