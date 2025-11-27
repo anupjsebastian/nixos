@@ -5,15 +5,9 @@
 {
   config,
   pkgs,
-  nixpkgs-unstable,
-  system,
+  unstablePkgs,
   ...
 }:
-let
-  unstablePkgs = import nixpkgs-unstable {
-    inherit system;
-  };
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -137,9 +131,6 @@ in
 
   # Install firefox.
   programs.firefox.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

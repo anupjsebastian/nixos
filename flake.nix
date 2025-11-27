@@ -8,19 +8,31 @@
   };
 
   outputs =
-    { self, nixpkgs, nixpkgs-unstable, ... }:
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      ...
+    }:
     let
       system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      unstablePkgs = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       nixosConfigurations.nyx = nixpkgs.lib.nixosSystem {
-        inherit system;
+        inherit pkgs;
         modules = [
           ./hosts/nyx/configuration.nix
         ];
         specialArgs = {
-          nixpkgs-unstable = nixpkgs-unstable;
-          system = system;
+          inherit unstablePkgs;
         };
       };
     };
