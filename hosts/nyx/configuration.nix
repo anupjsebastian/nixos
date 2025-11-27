@@ -2,13 +2,46 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  nixpkgs-unstable,
+  system,
+  ...
+}:
+let
+  unstablePkgs = import nixpkgs-unstable {
+    inherit system;
+  };
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+
+    ## Applications
+    ../../modules/apps/chrome.nix
+    ../../modules/apps/synology-drive.nix
+
+    ## Development tools
+    ../../modules/dev/rust.nix
+    ../../modules/dev/python.nix
+    # ../../modules/dev/flutter.nix
+    ../../modules/dev/web.nix
+
+    ## Editors
+    ../../modules/editors/vscode.nix
+    ../../modules/editor/neovim.nix
+
+    ## Music Production Tools
+    # ../../modules/music/bitwig.nix
+
+    ## System Configurations
+    # ../../modules/system/gnome.nix
+    # ../../modules/system/niri.nix
+    # ../../modules/system/splash.nix
+
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -84,9 +117,12 @@
   users.users.anupjsebastian = {
     isNormalUser = true;
     description = "Anup Sebastian";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -99,9 +135,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-    neovim
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
     gh
     git
   ];
