@@ -31,7 +31,9 @@
     # ../../modules/music/bitwig.nix
 
     ## System Configurations
-    # ../../modules/system/gnome.nix
+    ../../modules/system/fonts.nix
+    ../../modules/system/gnome.nix
+    ../../modules/system/network.nix
     # ../../modules/system/niri.nix
     # ../../modules/system/splash.nix
 
@@ -48,14 +50,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nyx"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -73,36 +67,6 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  # Enable display server infrastructure (required even for Wayland desktops).
-  # This sets up GPU drivers, input handling, and XWayland compatibility.
-  # GNOME will use Wayland by default when available.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true; # Login Screen
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Enable fractional scaling for GNOME
-  services.xserver.displayManager.gdm.wayland = true;
-
-  # Enable experimental features including fractional scaling
-  programs.dconf.enable = true;
-  programs.dconf.profiles.user.databases = [
-    {
-      settings = {
-        "org/gnome/mutter" = {
-          experimental-features = [ "scale-monitor-framebuffer" ];
-        };
-      };
-    }
-  ];
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
   };
 
   # Enable CUPS to print documents.

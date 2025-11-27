@@ -1,6 +1,10 @@
 { unstablePkgs, ... }:
 {
   environment.systemPackages = [
-    unstablePkgs.vscode
+    (unstablePkgs.vscode.override {
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+      ];
+    })
   ];
 }
