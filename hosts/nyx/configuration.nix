@@ -30,10 +30,8 @@
 
     ## System Configurations
     ../../modules/system/fonts.nix
-    # ../../modules/system/gnome.nix
+    ../../modules/system/noctalia.nix
     ../../modules/system/network.nix
-    ../../modules/system/shell.nix
-    ../../modules/system/niri
 
   ];
 

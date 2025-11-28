@@ -1,4 +1,4 @@
-{ unstablePkgs, pkgs, ... }:
+{ pkgs, unstablePkgs, ... }:
 {
   environment.systemPackages = [
     # Core Neovim
