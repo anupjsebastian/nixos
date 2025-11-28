@@ -19,6 +19,11 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    try = {
+      url = "github:tobi/try";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -29,6 +34,7 @@
       home-manager,
       niri,
       noctalia,
+      try,
     }:
     let
       system = "x86_64-linux";
@@ -54,7 +60,12 @@
             home-manager.useUserPackages = true;
             home-manager.users.anupjsebastian = import ./home.nix;
             home-manager.extraSpecialArgs = {
-              inherit noctalia niri unstablePkgs;
+              inherit
+                noctalia
+                niri
+                unstablePkgs
+                try
+                ;
             };
           }
 

@@ -136,6 +136,10 @@ in
             "-w"
             "timeout"
             "300"
+            "loginctl"
+            "lock-session"
+            "timeout"
+            "900"
             "niri"
             "msg"
             "action"
@@ -154,6 +158,9 @@ in
         # Noctalia integrations
         "Mod+Space".action.spawn = noctalia "launcher toggle";
         "Mod+P".action.spawn = noctalia "sessionMenu toggle";
+
+        # Utilities
+        "Mod+Shift+C".action.spawn = [ "clipboard-history" ];
 
         # Applications
         "Mod+Return".action.spawn = [
@@ -306,12 +313,12 @@ in
             enabled = true;
           }
           {
-            action = "logout";
-            enabled = false;
-          }
-          {
             action = "shutdown";
             enabled = true;
+          }
+          {
+            action = "logout";
+            enabled = false;
           }
         ];
       };
@@ -399,8 +406,23 @@ in
     wl-clipboard
     swayidle
     networkmanagerapplet
-    hyprpicker
     tokyonight-gtk-theme
     papirus-icon-theme
+
+    # Color picker with desktop entry
+    (pkgs.writeShellScriptBin "color-picker" ''
+      ${pkgs.hyprpicker}/bin/hyprpicker -a
+    '')
   ];
+
+  # Desktop entry for color picker
+  home.file.".local/share/applications/color-picker.desktop".text = ''
+    [Desktop Entry]
+    Name=Color Picker
+    Comment=Pick colors from the screen
+    Exec=color-picker
+    Icon=color-select-symbolic
+    Type=Application
+    Categories=Utility;Graphics;
+  '';
 }

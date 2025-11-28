@@ -15,6 +15,9 @@
   # Enable display server infrastructure for Wayland
   services.xserver.enable = true;
 
+  # Prevent xterm from being installed (pulled in by xserver)
+  services.xserver.excludePackages = with pkgs; [ xterm ];
+
   # Use GDM as display manager
   services.displayManager.gdm = {
     enable = true;
@@ -41,6 +44,9 @@
     gnome-keyring.enable = true;
   };
 
+  # Enable gvfs for Nautilus trash and virtual filesystem support
+  services.gvfs.enable = true;
+
   # Enable gnome-keyring PAM integration
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
@@ -59,6 +65,28 @@
       TimeoutStopSec = 10;
     };
   };
+
+  # Lock screen handler for loginctl lock-session
+  # This ensures when swayidle calls "loginctl lock-session", Noctalia's lock screen is triggered
+  systemd.user.services.noctalia-lock = {
+    description = "Noctalia lock screen";
+    before = [ "sleep.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.writeShellScript "noctalia-lock" ''
+        noctalia-shell ipc call lock toggle
+      ''}";
+    };
+  };
+
+  # Register lock target
+  systemd.user.targets.lock = {
+    unitConfig = {
+      Description = "Lock the session";
+    };
+  };
+
+  systemd.user.services.noctalia-lock.wantedBy = [ "lock.target" ];
 
   # XDG portal for screen sharing, file picker, etc.
   xdg.portal = {

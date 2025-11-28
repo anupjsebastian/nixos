@@ -4,6 +4,7 @@
   noctalia,
   niri,
   unstablePkgs,
+  try,
   ...
 }:
 
@@ -24,7 +25,15 @@
   imports = [
     noctalia.homeModules.default
     niri.homeModules.niri
+    try.homeManagerModules.default
     ./modules/home/niri.nix
     ./modules/home/shell.nix
+    ./modules/home/clipboard.nix
   ];
+
+  # Configure try for temporary project directories
+  programs.try = {
+    enable = true;
+    path = "~/.tries";
+  };
 }

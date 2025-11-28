@@ -15,11 +15,14 @@
 
     ## Applications
     ../../modules/apps/chrome.nix
+    ../../modules/apps/obsidian.nix
+    ../../modules/apps/dropbox.nix
     # ../../modules/apps/synology-drive.nix
     ../../modules/apps/vlc.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
+    ../../modules/dev/ruby.nix
     ../../modules/dev/python.nix
     ../../modules/dev/flutter.nix
     ../../modules/dev/web.nix
