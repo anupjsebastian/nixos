@@ -249,14 +249,14 @@ in
         "Mod+Shift+L".action."move-column-right" = [ ];
 
         # Workspace navigation
-        "Mod+U".action."focus-workspace-down" = [ ];
-        "Mod+I".action."focus-workspace-up" = [ ];
+        "Mod+I".action."focus-workspace-down" = [ ];
+        "Mod+O".action."focus-workspace-up" = [ ];
         "Mod+Page_Down".action."focus-workspace-down" = [ ];
         "Mod+Page_Up".action."focus-workspace-up" = [ ];
 
         # Move window to workspace up/down
-        "Mod+Ctrl+U".action."move-column-to-workspace-down" = [ ];
-        "Mod+Ctrl+I".action."move-column-to-workspace-up" = [ ];
+        "Mod+Ctrl+I".action."move-column-to-workspace-down" = [ ];
+        "Mod+Ctrl+O".action."move-column-to-workspace-up" = [ ];
         "Mod+Ctrl+Page_Down".action."move-column-to-workspace-down" = [ ];
         "Mod+Ctrl+Page_Up".action."move-column-to-workspace-up" = [ ];
 
@@ -298,7 +298,7 @@ in
         "Mod+C".action."center-column" = [ ];
 
         # Overview
-        "Mod+O".action."toggle-overview" = [ ];
+        "Mod+U".action."toggle-overview" = [ ];
 
         # System - use loginctl to properly terminate the session
         "Mod+Shift+E".action.spawn = [
