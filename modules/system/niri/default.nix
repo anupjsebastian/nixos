@@ -126,6 +126,7 @@ in
 
     # File manager and utilities
     yazi # TUI file manager
+    btop # System monitor
 
     # System utilities
     pavucontrol # Volume control GUI

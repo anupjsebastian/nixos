@@ -4,11 +4,12 @@
   config = ''
     binds {
         // Applications
-        Mod+Return { spawn "${pkgs.ptyxis}/bin/ptyxis" "--new-window"; }
-        Mod+Space { spawn "${pkgs.rofi}/bin/rofi" "-show" "drun"; }
-        Mod+B { spawn "${unstablePkgs.google-chrome}/bin/google-chrome-stable"; }
-        Mod+Y { spawn "${pkgs.ptyxis}/bin/ptyxis" "--new-window" "-e" "${pkgs.yazi}/bin/yazi"; }
-        Mod+N { spawn "${pkgs.nautilus}/bin/nautilus"; }
+        Mod+Return { spawn "ptyxis" "--new-window"; }
+        Mod+Space { spawn "rofi" "-show" "drun"; }
+        Mod+B { spawn "google-chrome-stable"; }
+        Mod+T { spawn "ptyxis" "--new-window" "-e" "btop"; }
+        Mod+Y { spawn "ptyxis" "--new-window" "-e" "yazi"; }
+        Mod+N { spawn "nautilus"; }
         
         Mod+Shift+Slash { show-hotkey-overlay; }
         
