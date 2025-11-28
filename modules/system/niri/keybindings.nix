@@ -7,8 +7,8 @@
         Mod+Return { spawn "ptyxis" "--new-window"; }
         Mod+Space { spawn "rofi" "-show" "drun"; }
         Mod+B { spawn "google-chrome-stable"; }
-        Mod+T { spawn "ptyxis" "--new-window" "-e" "btop"; }
-        Mod+Y { spawn "ptyxis" "--new-window" "-e" "yazi"; }
+        Mod+T { spawn "ptyxis" "-e" "btop"; }
+        Mod+Y { spawn "ptyxis" "-e" "yazi"; }
         Mod+N { spawn "nautilus"; }
         
         Mod+Shift+Slash { show-hotkey-overlay; }

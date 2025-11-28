@@ -15,6 +15,7 @@
         }
         
         mouse {
+            natural-scroll
             accel-speed 0.2
         }
         
