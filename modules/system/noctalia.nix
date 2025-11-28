@@ -105,7 +105,7 @@
   environment.sessionVariables = {
     XDG_CURRENT_DESKTOP = "niri";
     XDG_SESSION_TYPE = "wayland";
-    GTK_THEME = "Adwaita:dark";
+    GTK_THEME = "Tokyonight-Dark-BL";
     GI_TYPELIB_PATH = lib.makeSearchPath "lib/girepository-1.0" (
       with pkgs;
       [
@@ -155,7 +155,8 @@
 
     # Theme
     tokyonight-gtk-theme
-    papirus-icon-theme
+    kanagawa-gtk-theme
+    kanagawa-icon-theme
     adwaita-icon-theme
   ];
 

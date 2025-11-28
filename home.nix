@@ -36,4 +36,20 @@
     enable = true;
     path = "~/.tries";
   };
+
+  # GTK theme configuration
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Tokyonight-Dark-BL";
+      package = pkgs.tokyonight-gtk-theme;
+    };
+    iconTheme = {
+      name = "Numix";
+      package = pkgs.numix-icon-theme;
+    };
+  };
+
+  # Force overwrite existing GTK config files
+  xdg.configFile."gtk-3.0/settings.ini".force = true;
 }

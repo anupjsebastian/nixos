@@ -421,7 +421,6 @@ in
     swayidle
     networkmanagerapplet
     tokyonight-gtk-theme
-    papirus-icon-theme
 
     # Color picker with desktop entry
     (pkgs.writeShellScriptBin "color-picker" ''
