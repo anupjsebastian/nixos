@@ -123,6 +123,7 @@
   environment.systemPackages = with pkgs; [
     # GNOME apps to keep
     nautilus # File manager
+    xfce.thunar # Alternative file manager (no CSD rendering issues)
     ptyxis # Terminal
     baobab # Disk usage analyzer
     loupe # Image viewer (GNOME's new image viewer)

@@ -192,7 +192,7 @@ in
           "-e"
           "yazi"
         ];
-        "Mod+N".action.spawn = [ "nautilus" ];
+        "Mod+N".action.spawn = [ "thunar" ];
 
         "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];
 
