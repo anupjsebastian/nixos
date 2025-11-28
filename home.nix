@@ -41,7 +41,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Tokyonight-Dark-BL";
+      name = "Tokyonight-Dark";
       package = pkgs.tokyonight-gtk-theme;
     };
     iconTheme = {
@@ -49,7 +49,4 @@
       package = pkgs.numix-icon-theme;
     };
   };
-
-  # Force overwrite existing GTK config files
-  xdg.configFile."gtk-3.0/settings.ini".force = true;
 }

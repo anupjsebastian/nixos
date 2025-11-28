@@ -105,7 +105,6 @@
   environment.sessionVariables = {
     XDG_CURRENT_DESKTOP = "niri";
     XDG_SESSION_TYPE = "wayland";
-    GTK_THEME = "Tokyonight-Dark-BL";
     GI_TYPELIB_PATH = lib.makeSearchPath "lib/girepository-1.0" (
       with pkgs;
       [
