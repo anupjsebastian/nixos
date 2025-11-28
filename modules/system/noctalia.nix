@@ -9,7 +9,7 @@
   # Enable Niri window manager
   programs.niri = {
     enable = true;
-    package = niri.packages.${pkgs.system}.niri-unstable;
+    package = niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
   };
 
   # Enable display server infrastructure for Wayland
