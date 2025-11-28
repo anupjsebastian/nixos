@@ -15,21 +15,17 @@
   # Enable display server infrastructure for Wayland
   services.xserver.enable = true;
 
-  # Replace GDM with greetd + regreet (themeable Wayland greeter)
-  services.greetd = {
+  # Use GDM as display manager
+  services.displayManager.gdm = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.cage}/bin/cage -s -- ${pkgs.regreet}/bin/regreet";
-        user = "greeter";
-      };
-    };
+    wayland = true;
   };
 
-  # Configure regreet (GTK4 greeter for greetd)
-  programs.regreet = {
-    enable = true;
-  };
+  # Disable greetd (replaced by GDM)
+  services.greetd.enable = false;
+
+  # Disable regreet (not needed with GDM)
+  programs.regreet.enable = false;
 
   # Set Niri as the default session
   services.displayManager.defaultSession = "niri";
@@ -47,7 +43,7 @@
 
   # Enable gnome-keyring PAM integration
   security.pam.services.login.enableGnomeKeyring = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
 
   # Polkit authentication agent
   systemd.user.services.polkit-gnome-authentication-agent-1 = {

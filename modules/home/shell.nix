@@ -1,9 +1,16 @@
 { pkgs, ... }:
 
 {
+  # Bash shell configuration
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+  };
+
   # Starship prompt
   programs.starship = {
     enable = true;
+    enableBashIntegration = true;
     settings = {
       # Add custom starship configuration here if needed
     };

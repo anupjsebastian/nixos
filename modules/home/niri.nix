@@ -57,7 +57,7 @@ in
         center-focused-column = "always";
 
         struts = {
-          top = -32;
+          top = 1;
         };
 
         preset-column-widths = [
@@ -296,11 +296,6 @@ in
             { id = "ActiveWindow"; }
           ];
           center = [
-            {
-              id = "Workspace";
-              hideUnoccupied = false;
-              labelMode = "none";
-            }
             {
               id = "Clock";
               formatHorizontal = "MMM dd HH:mm";
