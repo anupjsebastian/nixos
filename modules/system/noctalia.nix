@@ -99,7 +99,6 @@
     baobab # Disk usage analyzer
     loupe # Image viewer (GNOME's new image viewer)
     papers # Document viewer (Evince replacement)
-    gnome-disk-utility # Disk utility
 
     # Fallback terminal
     gnome-console
