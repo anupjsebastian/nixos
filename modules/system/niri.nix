@@ -55,6 +55,25 @@
     };
   };
 
+  # Swaylock lock handler for loginctl lock-session
+  systemd.user.services.swaylock = {
+    description = "Swaylock screen locker";
+    before = [ "sleep.target" ];
+    serviceConfig = {
+      Type = "forking";
+      ExecStart = "${pkgs.swaylock}/bin/swaylock -f";
+    };
+  };
+
+  # Disable automatic suspend
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandlePowerKey = "ignore";
+    IdleAction = "ignore";
+  };
+
   # XDG portal for screen sharing, file picker, etc.
   xdg.portal = {
     enable = true;
@@ -296,6 +315,7 @@
     spawn-at-startup "nm-applet" "--indicator"
     spawn-at-startup "waypaper" "--restore"
     spawn-at-startup "sh" "-c" "swaybg -c '#bb9af7'"
+    spawn-at-startup "swayidle" "-w" "timeout" "300" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors"
   '';
 
   # Waybar configuration
@@ -488,6 +508,7 @@
 
     #tray {
         padding: 0 10px;
+        margin-right: 8px;
     }
 
     #custom-terminal {
