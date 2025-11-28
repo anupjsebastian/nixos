@@ -310,10 +310,9 @@
     ];
     modules-center = [ "clock" ];
     modules-right = [
-      "custom/terminal"
       "tray"
+      "custom/terminal"
       "pulseaudio"
-      "network"
       "battery"
       "custom/power"
     ];
@@ -344,9 +343,9 @@
     };
 
     "custom/terminal" = {
-      format = "";
+      format = "";
       tooltip = false;
-      on-click = "ptyxis --new-window";
+      on-click = "${pkgs.ptyxis}/bin/ptyxis --new-window";
     };
 
     clock = {
@@ -451,7 +450,8 @@
     #battery,
     #network,
     #pulseaudio,
-    #tray {
+    #tray,
+    #custom-terminal {
         padding: 0 12px;
         margin: 0 4px;
     }
@@ -491,10 +491,7 @@
     }
 
     #custom-terminal {
-        padding: 0 12px;
-        margin: 0 4px;
         color: #89dceb;
-        font-size: 16px;
     }
 
     #custom-power {
@@ -527,91 +524,90 @@
 
   # Link niri config to user directory
   system.activationScripts.niriUserConfig = ''
-                                    NIRI_USER_DIR="/home/anupjsebastian/.config/niri"
-                                    mkdir -p "$NIRI_USER_DIR"
-                                    ln -sf /etc/xdg/niri/config.kdl "$NIRI_USER_DIR/config.kdl"
-                                    chown -R anupjsebastian:users "$NIRI_USER_DIR"
-                                    
-                                    # Setup rofi config
-                                    ROFI_DIR="/home/anupjsebastian/.config/rofi"
-                                    mkdir -p "$ROFI_DIR"
-                                    cat > "$ROFI_DIR/config.rasi" << 'EOF'
-            configuration {
-                modi: "drun,run,window";
-                show-icons: true;
-                drun-display-format: "{name}";
-                font: "ZedMono Nerd Font 12";
-            }
+                                            NIRI_USER_DIR="/home/anupjsebastian/.config/niri"
+                                            mkdir -p "$NIRI_USER_DIR"
+                                            ln -sf /etc/xdg/niri/config.kdl "$NIRI_USER_DIR/config.kdl"
+                                            chown -R anupjsebastian:users "$NIRI_USER_DIR"
+                                            
+                                            # Setup rofi config
+                                            ROFI_DIR="/home/anupjsebastian/.config/rofi"
+                                            mkdir -p "$ROFI_DIR"
+                                            cat > "$ROFI_DIR/config.rasi" << 'EOF'
+    configuration {
+        modi: "drun,run,window";
+        show-icons: true;
+        drun-display-format: "{name}";
+        font: "ZedMono Nerd Font 12";
+    }
 
-            @theme "/dev/null"
+    @theme "/dev/null"
 
-            * {
-                bg: #1a1b26;
-                bg-alt: #24283b;
-                fg: #c0caf5;
-                fg-alt: #a9b1d6;
-                
-                accent: #7aa2f7;
-                urgent: #f7768e;
-                
-                background-color: transparent;
-                text-color: @fg;
-                
-                margin: 0;
-                padding: 0;
-                spacing: 0;
-            }
+    * {
+        bg: #1a1b26;
+        bg-alt: #24283b;
+        fg: #c0caf5;
+        fg-alt: #a9b1d6;
+        
+        accent: #7aa2f7;
+        urgent: #f7768e;
+        
+        background-color: transparent;
+        text-color: @fg;
+        
+        margin: 0;
+        padding: 0;
+        spacing: 0;
+    }
 
-            window {
-                background-color: @bg;
-                border: 2px;
-                border-color: @accent;
-                border-radius: 12px;
-                width: 500px;
-                padding: 16px;
-            }
+    window {
+        background-color: @bg;
+        border: 2px;
+        border-color: @accent;
+        border-radius: 12px;
+        width: 500px;
+        padding: 16px;
+    }
 
-            mainbox {
-                children: [inputbar, listview];
-                spacing: 16px;
-            }
+    mainbox {
+        children: [inputbar, listview];
+        spacing: 16px;
+    }
 
-            inputbar {
-                children: [entry];
-                background-color: @bg-alt;
-                border-radius: 8px;
-                padding: 12px;
-            }
+    inputbar {
+        children: [entry];
+        background-color: @bg-alt;
+        border-radius: 8px;
+        padding: 12px;
+    }
 
-            entry {
-                placeholder: "";
-            }
+    entry {
+        placeholder: "";
+    }
 
-            listview {
-                lines: 8;
-                scrollbar: false;
-            }
+    listview {
+        lines: 8;
+        scrollbar: false;
+    }
 
-        element {
-            padding: 8px 12px;
-            border-radius: 6px;
-            spacing: 16px;
-        }
+    element {
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
 
-        element selected {
-            background-color: @accent;
-            text-color: @bg;
-        }
+    element selected {
+        background-color: @accent;
+        text-color: @bg;
+    }
 
-        element-icon {
-            size: 20px;
-            margin: 0 16px 0 0;
-        }
+    element-icon {
+        size: 20px;
+        margin: 0 12px 0 0;
+    }
 
-        element-text {
-            vertical-align: 0.5;
-        }
+    element-text {
+        vertical-align: 0.5;
+    }
     EOF
-                                    chown -R anupjsebastian:users "$ROFI_DIR"
+                                            chown -R anupjsebastian:users "$ROFI_DIR"
   '';
 }

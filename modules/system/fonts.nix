@@ -6,9 +6,9 @@
 
   fonts.fontconfig = {
     defaultFonts = {
-      monospace = [ "ZedMono Nerd Font" ];
-      sansSerif = [ "ZedMono Nerd Font" ];
-      serif = [ "ZedMono Nerd Font" ];
+      monospace = [ "ZedMono Nerd Font Mono Medium Extended" ];
+      sansSerif = [ "ZedMono Nerd Font Mono Medium Extended" ];
+      serif = [ "ZedMono Nerd Font Mono Medium Extended" ];
     };
   };
 
@@ -16,10 +16,10 @@
   fonts.fontconfig.localConf = ''
     <match target="pattern">
       <test name="family">
-        <string>ZedMono Nerd Font</string>
+        <string>ZedMono Nerd Font Mono Medium Extended</string>
       </test>
       <edit name="pixelsize" mode="assign">
-        <double>15</double>
+        <double>16</double>
       </edit>
     </match>
   '';
