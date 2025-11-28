@@ -28,15 +28,12 @@
     ../../modules/editor/vscode.nix
     ../../modules/editor/neovim.nix
 
-    ## Music Production Tools
-    # ../../modules/music/bitwig.nix
-
     ## System Configurations
     ../../modules/system/fonts.nix
     ../../modules/system/gnome.nix
     ../../modules/system/network.nix
     ../../modules/system/shell.nix
-    # ../../modules/system/niri.nix
+    # ../../modules/system/niri
 
   ];
 
@@ -70,6 +67,12 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Default text editor
+  environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
