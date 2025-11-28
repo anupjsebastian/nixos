@@ -48,5 +48,19 @@
       name = "Numix";
       package = pkgs.numix-icon-theme;
     };
+    font = {
+      name = "Sans";
+      size = 10;
+    };
+  };
+
+  # Font settings via dconf
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      font-name = "Sans 10";
+      document-font-name = "Sans 10";
+      monospace-font-name = "Monospace 10";
+      text-scaling-factor = 1.0;
+    };
   };
 }

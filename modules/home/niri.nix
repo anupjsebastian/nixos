@@ -67,7 +67,7 @@ in
         ];
 
         default-column-width = {
-          proportion = 0.6;
+          proportion = 0.5;
         };
 
         focus-ring = {
@@ -110,13 +110,30 @@ in
           matches = [
             { app-id = "^org\\.gnome\\.Nautilus$"; }
           ];
-          geometry-corner-radius = {
-            top-left = 0.0;
-            top-right = 0.0;
-            bottom-left = 0.0;
-            bottom-right = 0.0;
+          default-column-width = {
+            proportion = 0.4;
           };
-          clip-to-geometry = false;
+        }
+        # Thunar: always open at 40% width
+        {
+          matches = [
+            { app-id = "^thunar$"; }
+            { app-id = "^Thunar$"; }
+          ];
+          default-column-width = {
+            proportion = 0.4;
+          };
+        }
+        # VS Code: always open at 70% width
+        {
+          matches = [
+            { app-id = "^code$"; }
+            { app-id = "^Code$"; }
+            { title = "^Visual Studio Code"; }
+          ];
+          default-column-width = {
+            proportion = 0.7;
+          };
         }
       ];
 
@@ -124,8 +141,16 @@ in
       screenshot-path = "~/Pictures/Screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png";
 
       # Animations
-      animations.slowdown = 0.8;
-      animations.workspace-switch.enable = false;
+      animations = {
+        slowdown = 0.8;
+        workspace-switch = {
+          spring = {
+            damping-ratio = 1.0;
+            stiffness = 800;
+            epsilon = 0.0001;
+          };
+        };
+      };
 
       # Overview - disable workspace previews
       overview = {
@@ -192,7 +217,7 @@ in
           "-e"
           "yazi"
         ];
-        "Mod+N".action.spawn = [ "thunar" ];
+        "Mod+N".action.spawn = [ "nautilus" ];
 
         "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];
 
