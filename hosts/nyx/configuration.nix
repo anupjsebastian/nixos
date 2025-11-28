@@ -33,7 +33,7 @@
     # ../../modules/system/gnome.nix
     ../../modules/system/network.nix
     ../../modules/system/shell.nix
-    ../../modules/system/niri.nix
+    ../../modules/system/niri
 
   ];
 
