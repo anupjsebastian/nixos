@@ -98,8 +98,6 @@ in
       # Startup applications
       spawn-at-startup = [
         { command = [ "nm-applet" "--indicator" ]; }
-        { command = [ "waypaper" "--restore" ]; }
-        { command = [ "sh" "-c" "swaybg -c '#bb9af7'" ]; }
         { command = [ "swayidle" "-w" "timeout" "300" "niri" "msg" "action" "power-off-monitors" "resume" "niri" "msg" "action" "power-on-monitors" ]; }
       ];
 
@@ -299,27 +297,17 @@ in
 
   # Additional packages for the desktop
   home.packages = with pkgs; [
-    # Wayland utilities
+    # Wayland utilities (clipboard, screenshots already in system)
     wl-clipboard
-    grim
-    slurp
     
-    # Brightness control
-    brightnessctl
-    
-    # Wallpaper
-    swaybg
-    swww
-    waypaper
-    
-    # Idle management
+    # Idle management (for screen timeout/lock)
     swayidle
     
-    # Network manager applet
+    # Network manager applet (useful for VPN, advanced network settings)
     networkmanagerapplet
     
-    # Color picker
-    hyprpicker
+    # Utilities
+    hyprpicker    # Color picker for theming
     
     # Theme
     tokyonight-gtk-theme
