@@ -269,10 +269,10 @@ in
         "Mod+Page_Up".action."focus-workspace-up" = [ ];
 
         # Move window to workspace up/down
-        "Mod+Ctrl+I".action."move-column-to-workspace-down" = [ ];
-        "Mod+Ctrl+O".action."move-column-to-workspace-up" = [ ];
-        "Mod+Ctrl+Page_Down".action."move-column-to-workspace-down" = [ ];
-        "Mod+Ctrl+Page_Up".action."move-column-to-workspace-up" = [ ];
+        "Mod+Shift+I".action."move-column-to-workspace-down" = [ ];
+        "Mod+Shift+O".action."move-column-to-workspace-up" = [ ];
+        "Mod+Shift+Page_Down".action."move-column-to-workspace-down" = [ ];
+        "Mod+Shift+Page_Up".action."move-column-to-workspace-up" = [ ];
 
         # Workspace switching
         "Mod+1".action."focus-workspace" = 1;
