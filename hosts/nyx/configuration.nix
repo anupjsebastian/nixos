@@ -47,6 +47,16 @@
     "flakes"
   ];
 
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # Automatic store optimization
+  nix.optimise.automatic = true;
+
   # Enable automatic system upgrades (without auto-reboot)
   system.autoUpgrade = {
     enable = true;
@@ -56,6 +66,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.consoleMode = "max"; # Use highest available resolution
+  boot.loader.systemd-boot.configurationLimit = 20; # Keep only last 20 generations in boot menu
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
