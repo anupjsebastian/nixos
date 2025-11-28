@@ -382,7 +382,7 @@ in
 
       bar = {
         position = "top";
-        density = "default";
+        density = "comfortable";
         showCapsule = true;
         exclusiveZone = true;
         floating = true;
