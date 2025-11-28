@@ -1,21 +1,17 @@
 { unstablePkgs, pkgs, ... }:
-let
-  bitwig-wrapped = pkgs.symlinkJoin {
-    name = "bitwig-studio-wrapped";
-    paths = [ unstablePkgs.bitwig-studio ];
-    buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/bitwig-studio \
-        --set GDK_BACKEND x11 \
-        --set GDK_SCALE 1 \
-        --set GDK_DPI_SCALE 1 \
-        --set QT_AUTO_SCREEN_SCALE_FACTOR 0 \
-        --set QT_SCALE_FACTOR 1
-    '';
-  };
-in
 {
+  # Install Bitwig Studio
   environment.systemPackages = [
-    bitwig-wrapped
+    unstablePkgs.bitwig-studio
   ];
+
+  # Ensure proper audio/MIDI support
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
 }

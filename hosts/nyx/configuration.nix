@@ -15,11 +15,16 @@
 
     ## Applications
     ../../modules/apps/chrome.nix
-    # ../../modules/apps/synology-drive.nix
+    ../../modules/apps/obsidian.nix
+    ../../modules/apps/synology-drive.nix
     ../../modules/apps/vlc.nix
+
+    ## Music production
+    ../../modules/music/bitwig.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
+    ../../modules/dev/ruby.nix
     ../../modules/dev/python.nix
     ../../modules/dev/flutter.nix
     ../../modules/dev/web.nix
@@ -30,10 +35,8 @@
 
     ## System Configurations
     ../../modules/system/fonts.nix
-    ../../modules/system/gnome.nix
+    ../../modules/system/noctalia.nix
     ../../modules/system/network.nix
-    ../../modules/system/shell.nix
-    # ../../modules/system/niri
 
   ];
 
@@ -46,6 +49,16 @@
     "flakes"
   ];
 
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  # Automatic store optimization
+  nix.optimise.automatic = true;
+
   # Enable automatic system upgrades (without auto-reboot)
   system.autoUpgrade = {
     enable = true;
@@ -55,6 +68,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.consoleMode = "max"; # Use highest available resolution
+  boot.loader.systemd-boot.configurationLimit = 20; # Keep only last 20 generations in boot menu
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
