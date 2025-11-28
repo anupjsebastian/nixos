@@ -255,8 +255,12 @@ in
         # Overview
         "Mod+O".action."toggle-overview" = [ ];
 
-        # System
-        "Mod+Shift+E".action.quit = { };
+        # System - use loginctl to properly terminate the session
+        "Mod+Shift+E".action.spawn = [
+          "loginctl"
+          "terminate-session"
+          ""
+        ];
         "Mod+Shift+P".action."power-off-monitors" = [ ];
 
         # Volume (using Noctalia IPC for OSD)
@@ -279,6 +283,10 @@ in
     # Noctalia settings with Tokyo Night theme
     settings = {
       dock.enabled = false;
+
+      sessionMenu = {
+        hideLogout = true;
+      };
 
       bar = {
         position = "top";
@@ -307,11 +315,6 @@ in
             { id = "Tray"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
-            {
-              id = "Battery";
-              alwaysShowPercentage = true;
-              warningThreshold = 30;
-            }
             { id = "NotificationHistory"; }
             { id = "ControlCenter"; }
           ];
