@@ -162,7 +162,16 @@
             mouse {
                 accel-speed 0.2
             }
+            
+            disable-power-key-handling
         }
+
+    // Disable hot corners
+    gestures {
+        hot-corners {
+            off
+        }
+    }
 
     output "DP-5" {
         scale 1.5
