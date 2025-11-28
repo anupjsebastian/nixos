@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstablePkgs, ... }:
 {
   # Keybindings configuration for niri
   config = ''
@@ -6,7 +6,9 @@
         // Applications
         Mod+Return { spawn "${pkgs.ptyxis}/bin/ptyxis" "--new-window"; }
         Mod+Space { spawn "${pkgs.rofi}/bin/rofi" "-show" "drun"; }
-        Mod+B { spawn "${pkgs.google-chrome}/bin/google-chrome-stable"; }
+        Mod+B { spawn "${unstablePkgs.google-chrome}/bin/google-chrome-stable"; }
+        Mod+Y { spawn "${pkgs.ptyxis}/bin/ptyxis" "--new-window" "-e" "${pkgs.yazi}/bin/yazi"; }
+        Mod+N { spawn "${pkgs.nautilus}/bin/nautilus"; }
         
         Mod+Shift+Slash { show-hotkey-overlay; }
         

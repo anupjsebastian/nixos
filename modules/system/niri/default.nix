@@ -9,7 +9,7 @@ let
   displayConfig = import ./display.nix;
   inputConfig = import ./input.nix;
   layoutConfig = import ./layout.nix;
-  keybindingsConfig = import ./keybindings.nix { inherit pkgs; };
+  keybindingsConfig = import ./keybindings.nix { inherit pkgs unstablePkgs; };
   appearanceConfig = import ./appearance.nix;
   waybarConfig = import ./waybar.nix { inherit pkgs; };
   rofiConfig = import ./rofi.nix;
@@ -122,11 +122,16 @@ in
     nautilus # File manager
     ptyxis # Terminal
     gnome-console # Terminal (Ctrl+.)
+    evince # PDF viewer
+
+    # File manager and utilities
+    yazi # TUI file manager
 
     # System utilities
     pavucontrol # Volume control GUI
     networkmanagerapplet # Network manager tray
     blueman # Bluetooth manager
+    hyprpicker # Color picker
 
     # TUI Settings apps
     bluetuith # Bluetooth TUI
