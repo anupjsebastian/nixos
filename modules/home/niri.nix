@@ -343,10 +343,14 @@ in
     settings = {
       dock.enabled = false;
 
+      general = {
+        animationDisabled = true;
+      };
+
       sessionMenu = {
         enableCountdown = true;
         countdownDuration = 10000;
-        position = "center";
+        position = "top_right";
         showHeader = true;
         powerOptions = [
           {
