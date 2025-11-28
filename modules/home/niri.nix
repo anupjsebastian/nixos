@@ -95,6 +95,7 @@ in
 
       # Window rules
       window-rules = [
+        # Default window rules for all windows
         {
           geometry-corner-radius = {
             top-left = 8.0;
@@ -103,6 +104,19 @@ in
             bottom-right = 8.0;
           };
           clip-to-geometry = true;
+        }
+        # Fix Nautilus titlebar rendering issues
+        {
+          matches = [
+            { app-id = "^org\\.gnome\\.Nautilus$"; }
+          ];
+          geometry-corner-radius = {
+            top-left = 0.0;
+            top-right = 0.0;
+            bottom-left = 0.0;
+            bottom-right = 0.0;
+          };
+          clip-to-geometry = false;
         }
       ];
 

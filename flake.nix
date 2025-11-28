@@ -39,11 +39,11 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
-        inherit system;
+        system = system;
         config.allowUnfree = true;
       };
       unstablePkgs = import nixpkgs-unstable {
-        inherit system;
+        system = system;
         config.allowUnfree = true;
       };
     in
