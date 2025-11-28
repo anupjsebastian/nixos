@@ -54,7 +54,8 @@ in
       # Layout configuration
       layout = {
         gaps = 8;
-        center-focused-column = "always";
+        center-focused-column = "on-overflow";
+        always-center-single-column = true;
 
         struts = {
           top = 1;
@@ -91,7 +92,8 @@ in
         };
       };
 
-      # prefer-no-csd = true;
+      # Enable XWayland for X11 applications
+      prefer-no-csd = false;
 
       # Window rules
       window-rules = [
@@ -135,6 +137,15 @@ in
             proportion = 0.7;
           };
         }
+        # Bitwig Studio: always open at 100% width
+        {
+          matches = [
+            { app-id = "^com\\.bitwig\\.BitwigStudio$"; }
+          ];
+          default-column-width = {
+            proportion = 1.0;
+          };
+        }
       ];
 
       # Screenshot configuration
@@ -163,6 +174,9 @@ in
 
       # Startup applications
       spawn-at-startup = [
+        {
+          command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
+        }
         {
           command = [
             "nm-applet"

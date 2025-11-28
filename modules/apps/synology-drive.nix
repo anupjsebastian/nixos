@@ -1,10 +1,8 @@
 { unstablePkgs, pkgs, ... }:
 {
+  # Install Synology Drive Client
+  # Note: Synology Drive has built-in autostart, no systemd service needed
   environment.systemPackages = [
     unstablePkgs.synology-drive-client
   ];
-
-  # Enable autostart for Synology Drive
-  environment.etc."xdg/autostart/synology-drive.desktop".source =
-    "${unstablePkgs.synology-drive-client}/share/applications/synology-drive.desktop";
 }

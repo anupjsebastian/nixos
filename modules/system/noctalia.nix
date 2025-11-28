@@ -12,8 +12,11 @@
     package = niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
   };
 
-  # Enable display server infrastructure for Wayland
+  # Enable display server infrastructure for Wayland and XWayland
   services.xserver.enable = true;
+
+  # Enable XWayland for X11 application compatibility
+  programs.xwayland.enable = true;
 
   # Prevent xterm from being installed (pulled in by xserver)
   services.xserver.excludePackages = with pkgs; [ xterm ];
@@ -120,6 +123,9 @@
 
   # Install GNOME apps and system utilities
   environment.systemPackages = with pkgs; [
+    # XWayland support
+    xwayland-satellite
+
     # GNOME apps to keep
     nautilus # File manager
     xfce.thunar # Alternative file manager (no CSD rendering issues)
