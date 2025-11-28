@@ -28,9 +28,6 @@
     ../../modules/editor/vscode.nix
     ../../modules/editor/neovim.nix
 
-    ## Music Production Tools
-    # ../../modules/music/bitwig.nix
-
     ## System Configurations
     ../../modules/system/fonts.nix
     # ../../modules/system/gnome.nix

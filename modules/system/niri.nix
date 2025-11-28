@@ -20,10 +20,24 @@
     wayland = true;
   };
 
+  # Set Niri as the default session
+  services.displayManager.defaultSession = "niri";
+
   # Essential GNOME services for overlays and functionality
   services.gnome = {
     gnome-keyring.enable = true;
     gnome-settings-daemon.enable = true;
+  };
+
+  # Enable gnome-keyring PAM integration
+  security.pam.services.login.enableGnomeKeyring = true;
+
+  # Environment variables for GNOME apps
+  environment.sessionVariables = {
+    # Required for GNOME Control Center
+    XDG_CURRENT_DESKTOP = "GNOME";
+    XDG_SESSION_TYPE = "wayland";
+    GTK_THEME = "Adwaita:dark";
   };
 
   # Polkit authentication agent (for sudo prompts, etc.)
@@ -48,10 +62,21 @@
     config.common.default = "gnome";
   };
 
+  # Enable Thunderbolt support for ethernet adapters
+  services.hardware.bolt.enable = true;
+
+  # Ensure ethernet devices are managed
+  networking.networkmanager.unmanaged = [ ];
+
   # Install Niri and essential utilities
   environment.systemPackages = with pkgs; [
-    # Launcher
+    # Niri default packages (fallback launcher/terminal)
+    alacritty
     fuzzel
+
+    # Launcher
+    rofi
+    rofi-power-menu
 
     # Notifications
     mako
@@ -65,7 +90,6 @@
 
     # GNOME apps to keep
     nautilus # File manager
-    gnome-control-center # Settings
     ptyxis # Terminal
     gnome-console # Terminal (Ctrl+.)
 
@@ -74,92 +98,120 @@
     networkmanagerapplet # Network manager tray
     blueman # Bluetooth manager
 
-    # Screenshot tool
+    # TUI Settings apps
+    # nmtui comes with networkmanager (already enabled in network.nix)
+    bluetuith # Bluetooth TUI
+    wdisplays # Display configuration GUI
+
+    # Alternative settings panels
+    nwg-look # GTK theme switcher
+    lxappearance # GTK settings    # Alternative settings panels
+    nwg-look # GTK theme switcher
+    lxappearance # GTK settings    # Screenshot tool
     grim
     slurp
     wl-clipboard
 
     # Brightness control
     brightnessctl
-  ];
 
-  # Niri configuration
+    # Wallpaper
+    swaybg
+    swww # Animated wallpaper daemon
+    waypaper # GUI wallpaper picker
+
+    # Theme
+    tokyonight-gtk-theme
+    papirus-icon-theme
+  ]; # Niri configuration
   environment.etc."xdg/niri/config.kdl".text = ''
-    // Niri configuration
+        // Niri configuration
 
-    input {
-        keyboard {
-            xkb {
-                layout "us"
+        input {
+            keyboard {
+                xkb {
+                    layout "us"
+                }
+            }
+            
+            touchpad {
+                tap
+                natural-scroll
+                accel-speed 0.3
+            }
+            
+            mouse {
+                accel-speed 0.2
             }
         }
-        
-        touchpad {
-            tap
-            natural-scroll
-            accel-speed 0.3
-        }
-        
-        mouse {
-            accel-speed 0.2
-        }
-    }
 
-    output "eDP-1" {
-        scale 2.0
-        mode "2880x1800@120"
+    output "DP-5" {
+        scale 1.5
+        mode "3840x2160@240"
     }
 
     layout {
         gaps 8
         center-focused-column "on-overflow"
-        
-        preset-column-widths {
-            proportion 0.33333
-            proportion 0.5
-            proportion 0.66667
+            
+            preset-column-widths {
+                proportion 0.33333
+                proportion 0.5
+                proportion 0.66667
+            }
+
+            default-column-width { proportion 0.5; }
+            
+            focus-ring {
+                width 2
+                active-color "#7aa2f7"
+                inactive-color "#3b4261"
+            }
+            
+            border {
+                width 2
+                active-color "#7aa2f7"
+                inactive-color "#3b4261"
+            }
         }
 
-        default-column-width { proportion 0.5; }
-        
-        focus-ring {
-            width 2
-            active-color "#7aa2f7"
-            inactive-color "#3b4261"
+        prefer-no-csd
+
+        screenshot-path "~/Pictures/Screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+        animations {
+            slowdown 0.8
         }
-        
-        border {
-            width 2
-            active-color "#7aa2f7"
-            inactive-color "#3b4261"
+
+        window-rule {
+            geometry-corner-radius 8
+            clip-to-geometry true
         }
-    }
 
-    prefer-no-csd
-
-    screenshot-path "~/Pictures/Screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png"
-
-    animations {
-        slowdown 0.8
-        
-        shaders {
-            window-resize "default"
-            window-open "default"
-            window-close "default"
-            workspace-switch "default"
+        hotkey-overlay {
+            skip-at-startup
         }
-    }
-
-    window-rule {
-        geometry-corner-radius 8
-        clip-to-geometry true
-    }
 
     binds {
         // Mod key is Super (Windows key)
-        Mod+Return { spawn "ptyxis"; }
-        Mod+D { spawn "fuzzel"; }
+        Mod+Shift+Slash { show-hotkey-overlay; }
+        
+        Mod+Return { spawn "ptyxis" "--new-window"; }
+        Mod+Space { spawn "rofi" "-show" "drun"; }
+        Mod+B { spawn "google-chrome-stable"; }
         Mod+Q { close-window; }
+        
+        // Column/Window resizing
+        Mod+R { switch-preset-column-width; }
+        Mod+Shift+R { switch-preset-window-height; }
+        Mod+Ctrl+R { reset-window-height; }
+        Mod+F { maximize-column; }
+        Mod+Shift+F { fullscreen-window; }
+        
+        // Screenshots
+        Print { screenshot; }
+        Ctrl+Print { screenshot-screen; }
+        Alt+Print { screenshot-window; }
         
         // Window navigation (vim-style)
         Mod+H { focus-column-left; }
@@ -172,6 +224,18 @@
         Mod+Shift+J { move-window-down; }
         Mod+Shift+K { move-window-up; }
         Mod+Shift+L { move-column-right; }
+        
+        // Workspace navigation
+        Mod+U { focus-workspace-down; }
+        Mod+I { focus-workspace-up; }
+        Mod+Page_Down { focus-workspace-down; }
+        Mod+Page_Up { focus-workspace-up; }
+        
+        // Move window to workspace up/down
+        Mod+Ctrl+U { move-column-to-workspace-down; }
+        Mod+Ctrl+I { move-column-to-workspace-up; }
+        Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
+        Mod+Ctrl+Page_Up { move-column-to-workspace-up; }
         
         // Workspace switching
         Mod+1 { focus-workspace 1; }
@@ -199,12 +263,19 @@
         Mod+Comma { set-column-width "-10%"; }
         Mod+Period { set-column-width "+10%"; }
         
-        // Fullscreen
-        Mod+F { fullscreen-window; }
+        // Consume/expel windows
+        Mod+BracketLeft { consume-or-expel-window-left; }
+        Mod+BracketRight { consume-or-expel-window-right; }
         
-        // Screenshot
-        Print { spawn "grim" "-g" "$(slurp)" "-" "|" "wl-copy"; }
-        Mod+Print { spawn "grim" "-" "|" "wl-copy"; }
+        // Floating/tiling toggle
+        Mod+V { toggle-window-floating; }
+        Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+        
+        // Center column
+        Mod+C { center-column; }
+        
+        // Overview
+        Mod+O { toggle-overview; }
         
         // System
         Mod+Shift+E { quit; }
@@ -222,6 +293,9 @@
 
     spawn-at-startup "mako"
     spawn-at-startup "waybar"
+    spawn-at-startup "nm-applet" "--indicator"
+    spawn-at-startup "waypaper" "--restore"
+    spawn-at-startup "sh" "-c" "swaybg -c '#bb9af7'"
   '';
 
   # Waybar configuration
@@ -236,10 +310,12 @@
     ];
     modules-center = [ "clock" ];
     modules-right = [
+      "custom/terminal"
       "tray"
       "pulseaudio"
       "network"
       "battery"
+      "custom/power"
     ];
 
     "niri/workspaces" = {
@@ -259,6 +335,18 @@
 
     "niri/window" = {
       max-length = 50;
+    };
+
+    "custom/power" = {
+      format = "⏻";
+      tooltip = false;
+      on-click = "rofi -show power-menu -modi power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu";
+    };
+
+    "custom/terminal" = {
+      format = "";
+      tooltip = false;
+      on-click = "ptyxis --new-window";
     };
 
     clock = {
@@ -284,20 +372,20 @@
     };
 
     network = {
-      format-wifi = " {signalStrength}%";
-      format-ethernet = "";
-      format-disconnected = "⚠";
+      format-wifi = "  {signalStrength}%";
+      format-ethernet = "󰈀 ";
+      format-disconnected = "󰖪 ";
       tooltip-format = "{ifname}: {ipaddr}";
     };
 
     pulseaudio = {
       format = "{icon} {volume}%";
-      format-muted = " {volume}%";
+      format-muted = "󰖁 {volume}%";
       format-icons = {
         default = [
-          ""
-          ""
-          ""
+          "󰕿"
+          "󰖀"
+          "󰕾"
         ];
       };
       on-click = "pavucontrol";
@@ -311,39 +399,65 @@
   # Waybar styling
   environment.etc."xdg/waybar/style.css".text = ''
     * {
-        font-family: "JetBrainsMono Nerd Font", monospace;
-        font-size: 13px;
+        font-family: "ZedMono Nerd Font", "Noto Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
     }
 
     window#waybar {
-        background-color: rgba(30, 30, 46, 0.9);
+        background-color: rgba(24, 24, 37, 0.95);
         color: #cdd6f4;
-        border-bottom: 2px solid #7aa2f7;
+        border-bottom: 3px solid #89b4fa;
+        transition: all 0.3s ease;
     }
 
     #workspaces button {
-        padding: 0 10px;
-        color: #cdd6f4;
+        padding: 0 12px;
+        margin: 0 2px;
+        color: #bac2de;
         background-color: transparent;
         border: none;
+        border-radius: 8px;
+        transition: all 0.2s ease;
     }
 
     #workspaces button.active {
-        background-color: #7aa2f7;
-        color: #1e1e2e;
+        background-color: #89b4fa;
+        color: #11111b;
+        font-weight: 700;
     }
 
     #workspaces button:hover {
-        background-color: rgba(122, 162, 247, 0.3);
+        background-color: rgba(137, 180, 250, 0.3);
+        color: #cdd6f4;
     }
 
-    #window,
-    #clock,
+    #window {
+        margin: 0 10px;
+        padding: 0 15px;
+        color: #94e2d5;
+        font-weight: 600;
+    }
+
+    #clock {
+        padding: 0 20px;
+        color: #f5e0dc;
+        font-weight: 600;
+        background-color: rgba(137, 180, 250, 0.15);
+        border-radius: 8px;
+        margin: 4px 0;
+    }
+
     #battery,
     #network,
     #pulseaudio,
     #tray {
-        padding: 0 15px;
+        padding: 0 12px;
+        margin: 0 4px;
+    }
+
+    #battery {
+        color: #a6e3a1;
     }
 
     #battery.charging {
@@ -352,14 +466,42 @@
 
     #battery.warning:not(.charging) {
         color: #f9e2af;
+        font-weight: 700;
     }
 
     #battery.critical:not(.charging) {
         color: #f38ba8;
+        font-weight: 700;
+    }
+
+    #network {
+        color: #89dceb;
+    }
+
+    #pulseaudio {
+        color: #f5c2e7;
     }
 
     #pulseaudio.muted {
-        color: #585b70;
+        color: #6c7086;
+    }
+
+    #tray {
+        padding: 0 10px;
+    }
+
+    #custom-terminal {
+        padding: 0 12px;
+        margin: 0 4px;
+        color: #89dceb;
+        font-size: 16px;
+    }
+
+    #custom-power {
+        padding: 0 15px;
+        margin: 0 5px;
+        color: #a6e3a1;
+        font-size: 16px;
     }
   '';
 
@@ -382,4 +524,94 @@
 
   # Add brightnessctl for brightness control
   programs.light.enable = true;
+
+  # Link niri config to user directory
+  system.activationScripts.niriUserConfig = ''
+                                    NIRI_USER_DIR="/home/anupjsebastian/.config/niri"
+                                    mkdir -p "$NIRI_USER_DIR"
+                                    ln -sf /etc/xdg/niri/config.kdl "$NIRI_USER_DIR/config.kdl"
+                                    chown -R anupjsebastian:users "$NIRI_USER_DIR"
+                                    
+                                    # Setup rofi config
+                                    ROFI_DIR="/home/anupjsebastian/.config/rofi"
+                                    mkdir -p "$ROFI_DIR"
+                                    cat > "$ROFI_DIR/config.rasi" << 'EOF'
+            configuration {
+                modi: "drun,run,window";
+                show-icons: true;
+                drun-display-format: "{name}";
+                font: "ZedMono Nerd Font 12";
+            }
+
+            @theme "/dev/null"
+
+            * {
+                bg: #1a1b26;
+                bg-alt: #24283b;
+                fg: #c0caf5;
+                fg-alt: #a9b1d6;
+                
+                accent: #7aa2f7;
+                urgent: #f7768e;
+                
+                background-color: transparent;
+                text-color: @fg;
+                
+                margin: 0;
+                padding: 0;
+                spacing: 0;
+            }
+
+            window {
+                background-color: @bg;
+                border: 2px;
+                border-color: @accent;
+                border-radius: 12px;
+                width: 500px;
+                padding: 16px;
+            }
+
+            mainbox {
+                children: [inputbar, listview];
+                spacing: 16px;
+            }
+
+            inputbar {
+                children: [entry];
+                background-color: @bg-alt;
+                border-radius: 8px;
+                padding: 12px;
+            }
+
+            entry {
+                placeholder: "";
+            }
+
+            listview {
+                lines: 8;
+                scrollbar: false;
+            }
+
+        element {
+            padding: 8px 12px;
+            border-radius: 6px;
+            spacing: 16px;
+        }
+
+        element selected {
+            background-color: @accent;
+            text-color: @bg;
+        }
+
+        element-icon {
+            size: 20px;
+            margin: 0 16px 0 0;
+        }
+
+        element-text {
+            vertical-align: 0.5;
+        }
+    EOF
+                                    chown -R anupjsebastian:users "$ROFI_DIR"
+  '';
 }
