@@ -153,7 +153,6 @@ in
       binds = with config.lib.niri.actions; {
         # Noctalia integrations
         "Mod+Space".action.spawn = noctalia "launcher toggle";
-        "Mod+Escape".action.spawn = noctalia "lockScreen toggle";
         "Mod+P".action.spawn = noctalia "sessionMenu toggle";
 
         # Applications
@@ -348,6 +347,29 @@ in
             { id = "ControlCenter"; }
           ];
         };
+      };
+      ui = {
+        fontDefault = "Roboto";
+        fontFixed = "DejaVu Sans Mono";
+        fontDefaultScale = 1;
+        fontFixedScale = 1;
+        tooltipsEnabled = true;
+        panelBackgroundOpacity = 1;
+        panelsAttachedToBar = true;
+        settingsPanelAttachToBar = true;
+      };
+
+      location = {
+        name = "Houston";
+        weatherEnabled = true;
+        weatherShowEffects = true;
+        useFahrenheit = true;
+        use12hourFormat = false;
+        showWeekNumberInCalendar = false;
+        showCalendarEvents = false;
+        showCalendarWeather = true;
+        analogClockInCalendar = false;
+        firstDayOfWeek = -1;
       };
     };
 
