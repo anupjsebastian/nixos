@@ -1,4 +1,11 @@
-{ config, pkgs, noctalia, unstablePkgs, ... }:
+{
+  config,
+  pkgs,
+  noctalia,
+  niri,
+  unstablePkgs,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should manage
@@ -16,6 +23,7 @@
   # Import module configurations
   imports = [
     noctalia.homeModules.default
+    niri.homeModules.niri
     ./modules/home/niri.nix
     ./modules/home/shell.nix
   ];

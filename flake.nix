@@ -4,12 +4,17 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -22,6 +27,8 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
+      niri,
+      noctalia,
     }:
     let
       system = "x86_64-linux";
@@ -39,7 +46,7 @@
         inherit pkgs;
         modules = [
           ./hosts/nyx/configuration.nix
-          
+
           # Home Manager integration
           home-manager.nixosModules.home-manager
           {
@@ -47,18 +54,16 @@
             home-manager.useUserPackages = true;
             home-manager.users.anupjsebastian = import ./home.nix;
             home-manager.extraSpecialArgs = {
-              inherit noctalia unstablePkgs;
+              inherit noctalia niri unstablePkgs;
             };
           }
-          
+
           # Noctalia NixOS module
           noctalia.nixosModules.default
         ];
         specialArgs = {
-          inherit noctalia unstablePkgs;
+          inherit noctalia niri unstablePkgs;
         };
       };
-    };
-}     };
     };
 }

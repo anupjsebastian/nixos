@@ -1,9 +1,15 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  niri,
+  ...
+}:
 
 {
   # Enable Niri window manager
   programs.niri = {
     enable = true;
+    package = niri.packages.${pkgs.system}.niri-unstable;
   };
 
   # Enable display server infrastructure for Wayland
@@ -14,7 +20,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.regreet}/bin/regreet";
+        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.cage}/bin/cage -s -- ${pkgs.regreet}/bin/regreet";
         user = "greeter";
       };
     };
@@ -23,19 +29,6 @@
   # Configure regreet (GTK4 greeter for greetd)
   programs.regreet = {
     enable = true;
-    settings = {
-      background = {
-        path = "/etc/nixos/wallpaper.jpg";  # You can customize this
-        fit = "Cover";
-      };
-      GTK = {
-        application_prefer_dark_theme = true;
-        cursor_theme_name = "Adwaita";
-        font_name = "Sans 12";
-        icon_theme_name = "Papirus-Dark";
-        theme_name = "Adwaita-dark";
-      };
-    };
   };
 
   # Set Niri as the default session
@@ -90,7 +83,8 @@
     XDG_SESSION_TYPE = "wayland";
     GTK_THEME = "Adwaita:dark";
     GI_TYPELIB_PATH = lib.makeSearchPath "lib/girepository-1.0" (
-      with pkgs; [
+      with pkgs;
+      [
         evolution-data-server
         libical
         glib.out
@@ -104,37 +98,37 @@
   # Install GNOME apps and system utilities
   environment.systemPackages = with pkgs; [
     # GNOME apps to keep
-    nautilus              # File manager
-    ptyxis                # Terminal
-    baobab                # Disk usage analyzer
-    loupe                 # Image viewer (GNOME's new image viewer)
-    papers                # Document viewer (Evince replacement)
-    gnome-disks           # Disk utility
-    
+    nautilus # File manager
+    ptyxis # Terminal
+    baobab # Disk usage analyzer
+    loupe # Image viewer (GNOME's new image viewer)
+    papers # Document viewer (Evince replacement)
+    gnome-disk-utility # Disk utility
+
     # Fallback terminal
     gnome-console
-    
+
     # Python for calendar support
     (python3.withPackages (pyPkgs: with pyPkgs; [ pygobject3 ]))
-    
+
     # System utilities
-    pavucontrol           # Volume control GUI
-    blueman               # Bluetooth manager
-    
+    pavucontrol # Volume control GUI
+    blueman # Bluetooth manager
+
     # Display configuration
-    wdisplays             # Display configuration GUI
-    
+    wdisplays # Display configuration GUI
+
     # GTK theme tools
-    nwg-look              # GTK theme switcher
-    lxappearance          # GTK settings
-    
+    nwg-look # GTK theme switcher
+    lxappearance # GTK settings
+
     # Screenshot tools
     grim
     slurp
-    
+
     # Brightness control
     brightnessctl
-    
+
     # Theme
     tokyonight-gtk-theme
     papirus-icon-theme
