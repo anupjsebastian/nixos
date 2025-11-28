@@ -285,7 +285,36 @@ in
       dock.enabled = false;
 
       sessionMenu = {
-        hideLogout = true;
+        enableCountdown = true;
+        countdownDuration = 10000;
+        position = "center";
+        showHeader = true;
+        powerOptions = [
+          {
+            action = "lock";
+            enabled = true;
+          }
+          {
+            action = "suspend";
+            enabled = true;
+          }
+          {
+            action = "hibernate";
+            enabled = true;
+          }
+          {
+            action = "reboot";
+            enabled = true;
+          }
+          {
+            action = "logout";
+            enabled = false;
+          }
+          {
+            action = "shutdown";
+            enabled = true;
+          }
+        ];
       };
 
       bar = {
