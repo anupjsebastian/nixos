@@ -358,6 +358,25 @@ in
         settingsPanelAttachToBar = true;
       };
 
+      systemMonitor = {
+        cpuWarningThreshold = 80;
+        cpuCriticalThreshold = 90;
+        tempWarningThreshold = 80;
+        tempCriticalThreshold = 90;
+        memWarningThreshold = 80;
+        memCriticalThreshold = 90;
+        diskWarningThreshold = 80;
+        diskCriticalThreshold = 90;
+        cpuPollingInterval = 2000;
+        tempPollingInterval = 2000;
+        memPollingInterval = 2000;
+        diskPollingInterval = 3000;
+        networkPollingInterval = 2000;
+        useCustomColors = false;
+        warningColor = "";
+        criticalColor = "";
+      };
+
       sessionMenu = {
         enableCountdown = true;
         countdownDuration = 10000;
@@ -415,7 +434,12 @@ in
             }
           ];
           right = [
-            { id = "SystemMonitor"; }
+            {
+              id = "SystemMonitor";
+              showMemoryAsPercent = true;
+              showDiskUsage = true;
+              diskPath = "/";
+            }
             { id = "Tray"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
