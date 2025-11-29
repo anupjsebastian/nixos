@@ -189,7 +189,7 @@ in
             "niri msg action power-off-monitors"
             "timeout"
             "1800"
-            "noctalia-shell ipc call lock toggle"
+            "noctalia-shell ipc call lockScreen lock"
             "resume"
             "niri msg action power-on-monitors"
           ];
