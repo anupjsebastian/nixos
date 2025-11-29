@@ -201,9 +201,9 @@ in
         # Noctalia integrations
         "Mod+Space".action.spawn = noctalia "launcher toggle";
         "Mod+P".action.spawn = noctalia "sessionMenu toggle";
-
-        # Utilities
-        "Mod+Shift+C".action.spawn = [ "clipboard-history" ];
+        "Mod+E".action.spawn = noctalia "launcher emoji";
+        "Mod+Shift+Return".action.spawn = [ "clipboard-history" ];
+        "Mod+Shift+C".action.spawn = noctalia "launcher calculator";
 
         # Applications
         "Mod+Return".action.spawn = [
@@ -222,6 +222,7 @@ in
           "yazi"
         ];
         "Mod+N".action.spawn = [ "nautilus" ];
+        "Mod+Shift+P".action.spawn = [ "color-picker" ];
 
         "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];
 
@@ -245,6 +246,12 @@ in
         "Mod+J".action."focus-window-down" = [ ];
         "Mod+K".action."focus-window-up" = [ ];
         "Mod+L".action."focus-column-right" = [ ];
+
+        # Window navigation (arrow keys)
+        "Mod+Left".action."focus-column-left" = [ ];
+        "Mod+Down".action."focus-window-down" = [ ];
+        "Mod+Up".action."focus-window-up" = [ ];
+        "Mod+Right".action."focus-column-right" = [ ];
 
         # Window movement
         "Mod+Shift+H".action."move-column-left" = [ ];
@@ -304,13 +311,9 @@ in
         # Overview
         "Mod+U".action."toggle-overview" = [ ];
 
-        # System - use loginctl to properly terminate the session
-        "Mod+Shift+E".action.spawn = [
-          "loginctl"
-          "terminate-session"
-          ""
-        ];
-        "Mod+Shift+P".action."power-off-monitors" = [ ];
+        # System controls
+        "Mod+Shift+E".action."power-off-monitors" = [ ];
+        "Mod+Shift+M".action."power-on-monitors" = [ ];
 
         # Volume (using Noctalia IPC for OSD)
         "XF86AudioRaiseVolume".action.spawn = noctalia "volume increase";
@@ -429,6 +432,11 @@ in
         generateTemplatesForPredefined = true;
       };
 
+      appLauncher = {
+        enableClipboardHistory = true;
+        enableClipPreview = true;
+      };
+
       location = {
         name = "Houston";
         weatherEnabled = true;
@@ -447,6 +455,7 @@ in
   # Additional packages for the desktop
   home.packages = with pkgs; [
     wl-clipboard
+    cliphist
     swayidle
     networkmanagerapplet
     tokyonight-gtk-theme
@@ -463,7 +472,7 @@ in
     Name=Color Picker
     Comment=Pick colors from the screen
     Exec=color-picker
-    Icon=color-select-symbolic
+    Icon=gtk-select-color
     Type=Application
     Categories=Utility;Graphics;
   '';

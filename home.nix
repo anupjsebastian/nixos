@@ -36,6 +36,13 @@ in
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
+  # Allow Home Manager to overwrite existing files
+  home.activation = {
+    removeExistingRofiConfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+      rm -f ~/.config/rofi/config.rasi
+    '';
+  };
+
   # Import module configurations
   imports = [
     try.homeManagerModules.default
