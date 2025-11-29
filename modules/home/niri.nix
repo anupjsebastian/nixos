@@ -175,9 +175,6 @@ in
       # Startup applications
       spawn-at-startup = [
         {
-          command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
-        }
-        {
           command = [
             "nm-applet"
             "--indicator"
@@ -188,15 +185,18 @@ in
             "swayidle"
             "-w"
             "timeout"
-            "300"
-            "loginctl"
-            "lock-session"
-            "timeout"
-            "900"
+            "300" # Turn off monitors after 5 minutes (300 seconds)
             "niri"
             "msg"
             "action"
             "power-off-monitors"
+            "timeout"
+            "1800" # Lock after 30 minutes (1800 seconds)
+            "noctalia-shell"
+            "ipc"
+            "call"
+            "lock"
+            "toggle"
             "resume"
             "niri"
             "msg"

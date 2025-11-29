@@ -16,11 +16,7 @@
     ## Applications
     ../../modules/apps/chrome.nix
     ../../modules/apps/obsidian.nix
-    ../../modules/apps/synology-drive.nix
     ../../modules/apps/vlc.nix
-
-    ## Music production
-    ../../modules/music/bitwig.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
@@ -35,7 +31,7 @@
 
     ## System Configurations
     ../../modules/system/fonts.nix
-    ../../modules/system/noctalia.nix
+    ../../modules/system/desktop.nix
     ../../modules/system/network.nix
 
   ];
