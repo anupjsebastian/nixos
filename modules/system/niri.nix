@@ -49,6 +49,9 @@
     # Enable gvfs for Nautilus trash and virtual filesystem support
     services.gvfs.enable = true;
 
+    # Enable Thunar thumbnail support
+    services.tumbler.enable = true;
+
     # Enable gnome-keyring PAM integration
     security.pam.services.login.enableGnomeKeyring = true;
     security.pam.services.gdm.enableGnomeKeyring = true;
@@ -123,12 +126,17 @@
     # Install GNOME apps and system utilities
     environment.systemPackages = with pkgs; [
       # GNOME apps to keep
-      nautilus # File manager
-      xfce.thunar # Alternative file manager (no CSD rendering issues)
       ptyxis # Terminal
+
+      # Thunar file manager
+      xfce.thunar
+      xfce.thunar-volman # Removable media support
+      xfce.thunar-archive-plugin # Archive support
       baobab # Disk usage analyzer
       loupe # Image viewer (GNOME's new image viewer)
       papers # Document viewer (Evince replacement)
+
+      nautilus # Alternate file manager
 
       # Fallback terminal
       gnome-console

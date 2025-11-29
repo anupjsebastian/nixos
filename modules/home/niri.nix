@@ -221,7 +221,7 @@ in
           "-e"
           "yazi"
         ];
-        "Mod+N".action.spawn = [ "nautilus" ];
+        "Mod+N".action.spawn = [ "thunar" ];
         "Mod+Shift+P".action.spawn = [ "color-picker" ];
 
         "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];

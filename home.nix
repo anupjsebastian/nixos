@@ -48,6 +48,7 @@ in
     try.homeManagerModules.default
     ./modules/home/shell.nix
     ./modules/home/clipboard.nix
+    ./modules/home/thunar.nix
   ]
   ++ desktopModules;
 
