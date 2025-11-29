@@ -391,7 +391,7 @@ in
               hideUnoccupied = false;
               labelMode = "none";
             }
-            { id = "SystemMonitor"; }
+            { id = "Taskbar"; }
             { id = "ActiveWindow"; }
           ];
           center = [
@@ -402,6 +402,7 @@ in
             }
           ];
           right = [
+            { id = "SystemMonitor"; }
             { id = "Tray"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
