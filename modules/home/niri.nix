@@ -335,6 +335,11 @@ in
 
       general = {
         animationDisabled = false;
+        animationSpeed = 2.0;
+        fontDefault = "Roboto";
+        fontFixed = "DejaVu Sans Mono";
+        fontDefaultScale = 1;
+        fontFixedScale = 1;
       };
 
       sessionMenu = {
@@ -413,6 +418,17 @@ in
         settingsPanelAttachToBar = true;
       };
 
+      colorSchemes = {
+        useWallpaperColors = false;
+        predefinedScheme = "Tokyo Night";
+        darkMode = true;
+        schedulingMode = "off";
+        manualSunrise = "05:30";
+        manualSunset = "17:30";
+        matugenSchemeType = "scheme-fruit-salad";
+        generateTemplatesForPredefined = true;
+      };
+
       location = {
         name = "Houston";
         weatherEnabled = true;
@@ -425,26 +441,6 @@ in
         analogClockInCalendar = false;
         firstDayOfWeek = -1;
       };
-    };
-
-    # Tokyo Night color scheme for Noctalia
-    colors = {
-      mError = "#f7768e";
-      mOnError = "#1a1b26";
-      mOnPrimary = "#1a1b26";
-      mOnSecondary = "#1a1b26";
-      mOnSurface = "#c0caf5";
-      mOnSurfaceVariant = "#a9b1d6";
-      mOnTertiary = "#1a1b26";
-      mOnHover = "#c0caf5";
-      mOutline = "#565f89";
-      mPrimary = "#7aa2f7";
-      mSecondary = "#bb9af7";
-      mShadow = "#000000";
-      mSurface = "#1a1b26";
-      mHover = "#24283b";
-      mSurfaceVariant = "#24283b";
-      mTertiary = "#7dcfff";
     };
   };
 

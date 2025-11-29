@@ -18,6 +18,7 @@
     ## System Configurations
     ../../modules/system/fonts.nix
     ../../modules/system/network.nix
+    ../../modules/system/via.nix
 
     ## Desktop environments (both imported, enabled conditionally)
     ../../modules/system/niri.nix
