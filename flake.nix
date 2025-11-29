@@ -38,6 +38,12 @@
     }:
     let
       system = "x86_64-linux";
+
+      # Desktop environment selector
+      # Options: "niri" or "gnome"
+      # Change this to switch desktops
+      desktop = "niri";
+
       pkgs = import nixpkgs {
         system = system;
         config.allowUnfree = true;
@@ -65,6 +71,7 @@
                 niri
                 unstablePkgs
                 try
+                desktop
                 ;
             };
           }
@@ -73,7 +80,12 @@
           noctalia.nixosModules.default
         ];
         specialArgs = {
-          inherit noctalia niri unstablePkgs;
+          inherit
+            noctalia
+            niri
+            unstablePkgs
+            desktop
+            ;
         };
       };
     };
