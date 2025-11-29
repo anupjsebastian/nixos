@@ -185,23 +185,13 @@ in
             "swayidle"
             "-w"
             "timeout"
-            "300" # Turn off monitors after 5 minutes (300 seconds)
-            "niri"
-            "msg"
-            "action"
-            "power-off-monitors"
+            "300"
+            "niri msg action power-off-monitors"
             "timeout"
-            "1800" # Lock after 30 minutes (1800 seconds)
-            "noctalia-shell"
-            "ipc"
-            "call"
-            "lock"
-            "toggle"
+            "1800"
+            "noctalia-shell ipc call lock toggle"
             "resume"
-            "niri"
-            "msg"
-            "action"
-            "power-on-monitors"
+            "niri msg action power-on-monitors"
           ];
         }
       ];
