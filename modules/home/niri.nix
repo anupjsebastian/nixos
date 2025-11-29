@@ -315,7 +315,7 @@ in
         "Mod+C".action."center-column" = [ ];
 
         # Overview
-        "Mod+U".action."toggle-overview" = [ ];
+        "Mod+Escape".action."toggle-overview" = [ ];
 
         # System controls
         "Mod+Shift+E".action."power-off-monitors" = [ ];
