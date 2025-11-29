@@ -5,9 +5,24 @@
   niri,
   unstablePkgs,
   try,
+  lib,
+  desktop,
   ...
 }:
 
+let
+  # Desktop choice comes from flake.nix
+  # Conditional imports for desktop-specific modules
+  desktopModules =
+    if desktop == "niri" then
+      [
+        noctalia.homeModules.default
+        niri.homeModules.niri
+        ./modules/home/niri.nix
+      ]
+    else
+      [ ];
+in
 {
   # Home Manager needs a bit of information about you and the paths it should manage
   home.username = "anupjsebastian";
@@ -21,15 +36,20 @@
   # Let Home Manager install and manage itself
   programs.home-manager.enable = true;
 
+  # Allow Home Manager to overwrite existing files
+  home.activation = {
+    removeExistingRofiConfig = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+      rm -f ~/.config/rofi/config.rasi
+    '';
+  };
+
   # Import module configurations
   imports = [
-    noctalia.homeModules.default
-    niri.homeModules.niri
     try.homeManagerModules.default
-    ./modules/home/niri.nix
     ./modules/home/shell.nix
     ./modules/home/clipboard.nix
-  ];
+  ]
+  ++ desktopModules;
 
   # Configure try for temporary project directories
   programs.try = {

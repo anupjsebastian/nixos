@@ -6,6 +6,8 @@
   config,
   pkgs,
   unstablePkgs,
+  lib,
+  desktop,
   ...
 }:
 {
@@ -13,14 +15,19 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
+    ## System Configurations
+    ../../modules/system/fonts.nix
+    ../../modules/system/network.nix
+    ../../modules/system/via.nix
+
+    ## Desktop environments (both imported, enabled conditionally)
+    ../../modules/system/niri.nix
+    ../../modules/system/gnome.nix
+
     ## Applications
     ../../modules/apps/chrome.nix
     ../../modules/apps/obsidian.nix
-    ../../modules/apps/synology-drive.nix
     ../../modules/apps/vlc.nix
-
-    ## Music production
-    ../../modules/music/bitwig.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
@@ -32,12 +39,6 @@
     ## Editors
     ../../modules/editor/vscode.nix
     ../../modules/editor/neovim.nix
-
-    ## System Configurations
-    ../../modules/system/fonts.nix
-    ../../modules/system/noctalia.nix
-    ../../modules/system/network.nix
-
   ];
 
   # Increase nix download buffer - to fix warning when downloading big packages
@@ -63,6 +64,22 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
+    dates = "monthly";
+    randomizedDelaySec = "2h"; # Random delay up to 2 hours after 2 AM
+    flake = "path:/home/anupjsebastian/nixos#nyx";
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--update-input"
+      "nixpkgs-unstable"
+      "--update-input"
+      "home-manager"
+      "--update-input"
+      "niri"
+      "--update-input"
+      "noctalia"
+      "--commit-lock-file"
+    ];
   };
 
   # Bootloader.

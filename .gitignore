@@ -1,0 +1,19 @@
+# Nix build results
+result
+result-*
+result/
+
+# Hardware-specific files (auto-generated)
+hosts/*/hardware-configuration.nix.backup
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+.*.tmp

@@ -154,7 +154,7 @@ in
       # Animations
       animations = {
         slowdown = 0.8;
-        workspace-switch = {
+        workspace-switch.kind = {
           spring = {
             damping-ratio = 1.0;
             stiffness = 800;
@@ -175,9 +175,6 @@ in
       # Startup applications
       spawn-at-startup = [
         {
-          command = [ "${pkgs.xwayland-satellite}/bin/xwayland-satellite" ];
-        }
-        {
           command = [
             "nm-applet"
             "--indicator"
@@ -189,19 +186,12 @@ in
             "-w"
             "timeout"
             "300"
-            "loginctl"
-            "lock-session"
+            "niri msg action power-off-monitors"
             "timeout"
-            "900"
-            "niri"
-            "msg"
-            "action"
-            "power-off-monitors"
+            "1800"
+            "noctalia-shell ipc call lockScreen lock"
             "resume"
-            "niri"
-            "msg"
-            "action"
-            "power-on-monitors"
+            "niri msg action power-on-monitors"
           ];
         }
       ];
@@ -211,9 +201,9 @@ in
         # Noctalia integrations
         "Mod+Space".action.spawn = noctalia "launcher toggle";
         "Mod+P".action.spawn = noctalia "sessionMenu toggle";
-
-        # Utilities
-        "Mod+Shift+C".action.spawn = [ "clipboard-history" ];
+        "Mod+E".action.spawn = noctalia "launcher emoji";
+        "Mod+Shift+Return".action.spawn = [ "clipboard-history" ];
+        "Mod+Shift+C".action.spawn = noctalia "launcher calculator";
 
         # Applications
         "Mod+Return".action.spawn = [
@@ -232,6 +222,7 @@ in
           "yazi"
         ];
         "Mod+N".action.spawn = [ "nautilus" ];
+        "Mod+Shift+P".action.spawn = [ "color-picker" ];
 
         "Mod+Shift+Slash".action."show-hotkey-overlay" = [ ];
 
@@ -256,11 +247,23 @@ in
         "Mod+K".action."focus-window-up" = [ ];
         "Mod+L".action."focus-column-right" = [ ];
 
-        # Window movement
+        # Window navigation (arrow keys)
+        "Mod+Left".action."focus-column-left" = [ ];
+        "Mod+Down".action."focus-window-down" = [ ];
+        "Mod+Up".action."focus-window-up" = [ ];
+        "Mod+Right".action."focus-column-right" = [ ];
+
+        # Window movement (vim-style)
         "Mod+Shift+H".action."move-column-left" = [ ];
         "Mod+Shift+J".action."move-window-down" = [ ];
         "Mod+Shift+K".action."move-window-up" = [ ];
         "Mod+Shift+L".action."move-column-right" = [ ];
+
+        # Window movement (arrow keys)
+        "Mod+Shift+Left".action."move-column-left" = [ ];
+        "Mod+Shift+Down".action."move-window-down" = [ ];
+        "Mod+Shift+Up".action."move-window-up" = [ ];
+        "Mod+Shift+Right".action."move-column-right" = [ ];
 
         # Workspace navigation
         "Mod+I".action."focus-workspace-down" = [ ];
@@ -269,10 +272,10 @@ in
         "Mod+Page_Up".action."focus-workspace-up" = [ ];
 
         # Move window to workspace up/down
-        "Mod+Ctrl+I".action."move-column-to-workspace-down" = [ ];
-        "Mod+Ctrl+O".action."move-column-to-workspace-up" = [ ];
-        "Mod+Ctrl+Page_Down".action."move-column-to-workspace-down" = [ ];
-        "Mod+Ctrl+Page_Up".action."move-column-to-workspace-up" = [ ];
+        "Mod+Shift+I".action."move-column-to-workspace-down" = [ ];
+        "Mod+Shift+O".action."move-column-to-workspace-up" = [ ];
+        "Mod+Shift+Page_Down".action."move-column-to-workspace-down" = [ ];
+        "Mod+Shift+Page_Up".action."move-column-to-workspace-up" = [ ];
 
         # Workspace switching
         "Mod+1".action."focus-workspace" = 1;
@@ -312,15 +315,11 @@ in
         "Mod+C".action."center-column" = [ ];
 
         # Overview
-        "Mod+U".action."toggle-overview" = [ ];
+        "Mod+Escape".action."toggle-overview" = [ ];
 
-        # System - use loginctl to properly terminate the session
-        "Mod+Shift+E".action.spawn = [
-          "loginctl"
-          "terminate-session"
-          ""
-        ];
-        "Mod+Shift+P".action."power-off-monitors" = [ ];
+        # System controls
+        "Mod+Shift+E".action."power-off-monitors" = [ ];
+        "Mod+Shift+M".action."power-on-monitors" = [ ];
 
         # Volume (using Noctalia IPC for OSD)
         "XF86AudioRaiseVolume".action.spawn = noctalia "volume increase";
@@ -343,10 +342,19 @@ in
     settings = {
       dock.enabled = false;
 
+      general = {
+        animationDisabled = false;
+        animationSpeed = 2.0;
+        fontDefault = "Roboto";
+        fontFixed = "DejaVu Sans Mono";
+        fontDefaultScale = 1;
+        fontFixedScale = 1;
+      };
+
       sessionMenu = {
         enableCountdown = true;
         countdownDuration = 10000;
-        position = "center";
+        position = "top_right";
         showHeader = true;
         powerOptions = [
           {
@@ -378,7 +386,7 @@ in
 
       bar = {
         position = "top";
-        density = "default";
+        density = "comfortable";
         showCapsule = true;
         exclusiveZone = true;
         floating = true;
@@ -389,6 +397,7 @@ in
               hideUnoccupied = false;
               labelMode = "none";
             }
+            { id = "Taskbar"; }
             { id = "ActiveWindow"; }
           ];
           center = [
@@ -419,6 +428,22 @@ in
         settingsPanelAttachToBar = true;
       };
 
+      colorSchemes = {
+        useWallpaperColors = false;
+        predefinedScheme = "Tokyo Night";
+        darkMode = true;
+        schedulingMode = "off";
+        manualSunrise = "05:30";
+        manualSunset = "17:30";
+        matugenSchemeType = "scheme-fruit-salad";
+        generateTemplatesForPredefined = true;
+      };
+
+      appLauncher = {
+        enableClipboardHistory = false;
+        enableClipPreview = false;
+      };
+
       location = {
         name = "Houston";
         weatherEnabled = true;
@@ -432,31 +457,12 @@ in
         firstDayOfWeek = -1;
       };
     };
-
-    # Tokyo Night color scheme for Noctalia
-    colors = {
-      mError = "#f7768e";
-      mOnError = "#1a1b26";
-      mOnPrimary = "#1a1b26";
-      mOnSecondary = "#1a1b26";
-      mOnSurface = "#c0caf5";
-      mOnSurfaceVariant = "#a9b1d6";
-      mOnTertiary = "#1a1b26";
-      mOnHover = "#c0caf5";
-      mOutline = "#565f89";
-      mPrimary = "#7aa2f7";
-      mSecondary = "#bb9af7";
-      mShadow = "#000000";
-      mSurface = "#1a1b26";
-      mHover = "#24283b";
-      mSurfaceVariant = "#24283b";
-      mTertiary = "#7dcfff";
-    };
   };
 
   # Additional packages for the desktop
   home.packages = with pkgs; [
     wl-clipboard
+    cliphist
     swayidle
     networkmanagerapplet
     tokyonight-gtk-theme
@@ -473,7 +479,7 @@ in
     Name=Color Picker
     Comment=Pick colors from the screen
     Exec=color-picker
-    Icon=color-select-symbolic
+    Icon=gtk-select-color
     Type=Application
     Categories=Utility;Graphics;
   '';
