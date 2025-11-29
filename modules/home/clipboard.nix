@@ -27,7 +27,6 @@ let
         padding: 16px;
     }
 
-
     mainbox {
         children: [inputbar, listview];
         spacing: 16px;
