@@ -434,8 +434,8 @@ in
       };
 
       appLauncher = {
-        enableClipboardHistory = true;
-        enableClipPreview = true;
+        enableClipboardHistory = false;
+        enableClipPreview = false;
       };
 
       location = {
