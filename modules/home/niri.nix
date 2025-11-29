@@ -329,6 +329,10 @@ in
         # Brightness (using Noctalia IPC for OSD)
         "XF86MonBrightnessUp".action.spawn = noctalia "brightness increase";
         "XF86MonBrightnessDown".action.spawn = noctalia "brightness decrease";
+
+        # Brightness (Custom Keymap)
+        "Mod+Ctrl+Alt+Right".action.spawn = noctalia "brightness increase";
+        "Mod+Ctrl+Alt+Left".action.spawn = noctalia "brightness decrease";
       };
     };
   };
@@ -447,6 +451,12 @@ in
             { id = "ControlCenter"; }
           ];
         };
+      };
+
+      brightness = {
+        brightnessStep = 5;
+        enforceMinimum = true;
+        enableDdcSupport = true;
       };
 
       colorSchemes = {
