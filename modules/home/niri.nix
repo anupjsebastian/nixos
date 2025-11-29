@@ -345,10 +345,17 @@ in
       general = {
         animationDisabled = false;
         animationSpeed = 2.0;
+      };
+
+      ui = {
         fontDefault = "Roboto";
         fontFixed = "DejaVu Sans Mono";
-        fontDefaultScale = 1;
-        fontFixedScale = 1;
+        fontDefaultScale = 1.10;
+        fontFixedScale = 1.10;
+        tooltipsEnabled = true;
+        panelBackgroundOpacity = 1;
+        panelsAttachedToBar = true;
+        settingsPanelAttachToBar = true;
       };
 
       sessionMenu = {
@@ -416,16 +423,6 @@ in
             { id = "ControlCenter"; }
           ];
         };
-      };
-      ui = {
-        fontDefault = "Roboto";
-        fontFixed = "DejaVu Sans Mono";
-        fontDefaultScale = 1;
-        fontFixedScale = 1;
-        tooltipsEnabled = true;
-        panelBackgroundOpacity = 1;
-        panelsAttachedToBar = true;
-        settingsPanelAttachToBar = true;
       };
 
       colorSchemes = {
