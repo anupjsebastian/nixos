@@ -154,7 +154,7 @@ in
       # Animations
       animations = {
         slowdown = 0.8;
-        workspace-switch = {
+        workspace-switch.kind = {
           spring = {
             damping-ratio = 1.0;
             stiffness = 800;
@@ -344,7 +344,7 @@ in
       dock.enabled = false;
 
       general = {
-        animationDisabled = true;
+        animationDisabled = false;
       };
 
       sessionMenu = {
@@ -393,6 +393,7 @@ in
               hideUnoccupied = false;
               labelMode = "none";
             }
+            { id = "SystemMonitor"; }
             { id = "ActiveWindow"; }
           ];
           center = [
@@ -403,7 +404,6 @@ in
             }
           ];
           right = [
-            { id = "SystemMonitor"; }
             { id = "Tray"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
