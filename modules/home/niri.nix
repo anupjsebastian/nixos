@@ -253,11 +253,17 @@ in
         "Mod+Up".action."focus-window-up" = [ ];
         "Mod+Right".action."focus-column-right" = [ ];
 
-        # Window movement
+        # Window movement (vim-style)
         "Mod+Shift+H".action."move-column-left" = [ ];
         "Mod+Shift+J".action."move-window-down" = [ ];
         "Mod+Shift+K".action."move-window-up" = [ ];
         "Mod+Shift+L".action."move-column-right" = [ ];
+
+        # Window movement (arrow keys)
+        "Mod+Shift+Left".action."move-column-left" = [ ];
+        "Mod+Shift+Down".action."move-window-down" = [ ];
+        "Mod+Shift+Up".action."move-window-up" = [ ];
+        "Mod+Shift+Right".action."move-column-right" = [ ];
 
         # Workspace navigation
         "Mod+I".action."focus-workspace-down" = [ ];
