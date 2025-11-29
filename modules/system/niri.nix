@@ -14,6 +14,20 @@
       package = niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
     };
 
+    # Load i2c-dev module for ddcutil (brightness control)
+    boot.kernelModules = [ "i2c-dev" ];
+
+    # Configure udev rules for i2c devices (for ddcutil)
+    services.udev.extraRules = ''
+      KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+    '';
+
+    # Create i2c group
+    users.groups.i2c = { };
+
+    # Add user to i2c group (for ddcutil brightness control)
+    users.users.anupjsebastian.extraGroups = [ "i2c" ];
+
     # Enable display server infrastructure for Wayland
     services.xserver.enable = true;
 
