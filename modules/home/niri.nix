@@ -176,7 +176,7 @@ in
             "swayidle"
             "-w"
             "timeout"
-            "180"
+            "300"
             "niri msg action power-off-monitors"
             "timeout"
             "1200"
