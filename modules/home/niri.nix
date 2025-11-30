@@ -336,6 +336,7 @@ in
     # Noctalia settings with Tokyo Night theme
     settings = {
       dock.enabled = false;
+      network.wifiEnabled = false;
 
       general = {
         animationDisabled = false;
