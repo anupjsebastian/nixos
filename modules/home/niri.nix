@@ -107,7 +107,7 @@ in
           };
           clip-to-geometry = true;
         }
-        # Fix Nautilus titlebar rendering issues
+        # Nautilus: always open at 40% width
         {
           matches = [
             { app-id = "^org\\.gnome\\.Nautilus$"; }
@@ -135,15 +135,6 @@ in
           ];
           default-column-width = {
             proportion = 0.7;
-          };
-        }
-        # Bitwig Studio: always open at 100% width
-        {
-          matches = [
-            { app-id = "^com\\.bitwig\\.BitwigStudio$"; }
-          ];
-          default-column-width = {
-            proportion = 1.0;
           };
         }
       ];
@@ -184,19 +175,14 @@ in
           command = [
             "swayidle"
             "-w"
-            # Screen off after 5 minutes of idle
             "timeout"
             "300"
             "niri msg action power-off-monitors"
+            "timeout"
+            "1800"
+            "noctalia-shell ipc call lockScreen lock"
             "resume"
             "niri msg action power-on-monitors"
-            # Auto-lock after 20 minutes of idle
-            "timeout"
-            "1200"
-            "noctalia-shell ipc call lockScreen lock"
-            # If locked (manually or auto), turn off screen after 1 minute
-            "lock"
-            "sh -c 'sleep 60 && niri msg action power-off-monitors'"
           ];
         }
       ];
