@@ -437,6 +437,7 @@ in
               diskPath = "/";
             }
             { id = "Tray"; }
+            { id = "Volume"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
             { id = "NotificationHistory"; }
