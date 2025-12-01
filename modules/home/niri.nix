@@ -166,6 +166,10 @@ in
       # Startup applications
       spawn-at-startup = [
         {
+          command = [ "xwayland-satellite" ];
+        }
+
+        {
           command = [
             "nm-applet"
             "--indicator"
@@ -307,6 +311,7 @@ in
 
         # Overview
         "Mod+Escape".action."toggle-overview" = [ ];
+        "Mod+Backslash".action."toggle-overview" = [ ];
 
         # System controls
         "Mod+Shift+E".action."power-off-monitors" = [ ];
@@ -490,6 +495,7 @@ in
     swayidle
     networkmanagerapplet
     tokyonight-gtk-theme
+    xwayland-satellite
 
     # Color picker with desktop entry
     (pkgs.writeShellScriptBin "color-picker" ''

@@ -28,6 +28,7 @@
     ../../modules/apps/chrome.nix
     ../../modules/apps/obsidian.nix
     ../../modules/apps/vlc.nix
+    ../../modules/apps/bitwig.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
