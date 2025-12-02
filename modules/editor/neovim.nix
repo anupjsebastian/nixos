@@ -36,6 +36,7 @@
 
     # Runtime dependencies
     pkgs.nodejs # Node.js for Copilot and other plugins
+    pkgs.nodePackages.npm # npm for strudel.nvim and other plugins
     pkgs.tree-sitter # Tree-sitter CLI
 
     # Clipboard support
