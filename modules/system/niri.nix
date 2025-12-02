@@ -34,20 +34,36 @@
     # Prevent xterm from being installed (pulled in by xserver)
     services.xserver.excludePackages = with pkgs; [ xterm ];
 
-    # Use GDM as display manager
-    services.displayManager.gdm = {
+    # Use greetd with tuigreet as display manager
+    services.greetd = {
       enable = true;
-      wayland = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-user-session --theme 'container=black;border=lightblue;text=white;prompt=lightmagenta;time=lightblue;action=lightcyan;button=lightgreen;input=lightmagenta' --cmd niri-session";
+          user = "greeter";
+        };
+      };
     };
 
-    # Disable greetd (replaced by GDM)
-    services.greetd.enable = false;
-
-    # Disable regreet (not needed with GDM)
-    programs.regreet.enable = false;
-
-    # Set Niri as the default session
-    services.displayManager.defaultSession = "niri";
+    # Tokyo Night colors for TTY/console (used by tuigreet)
+    console.colors = [
+      "1a1b26" # black (Tokyo Night background)
+      "f7768e" # red
+      "9ece6a" # green
+      "e0af68" # yellow
+      "7aa2f7" # blue
+      "bb9af7" # magenta
+      "7dcfff" # cyan
+      "a9b1d6" # white
+      "414868" # bright black (darker gray)
+      "f7768e" # bright red
+      "9ece6a" # bright green
+      "e0af68" # bright yellow
+      "7aa2f7" # bright blue
+      "bb9af7" # bright magenta
+      "7dcfff" # bright cyan
+      "c0caf5" # bright white
+    ];
 
     # Essential services for Noctalia features
     networking.networkmanager.enable = true;
@@ -68,7 +84,7 @@
 
     # Enable gnome-keyring PAM integration
     security.pam.services.login.enableGnomeKeyring = true;
-    security.pam.services.gdm.enableGnomeKeyring = true;
+    security.pam.services.greetd.enableGnomeKeyring = true;
 
     # Polkit authentication agent
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -110,15 +126,12 @@
     # XDG portal for screen sharing, file picker, etc.
     xdg.portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-      config.common.default = "gnome";
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.common.default = "gtk";
     };
 
     # Enable Thunderbolt support for ethernet adapters
     services.hardware.bolt.enable = true;
-
-    # Calendar events support (for Noctalia)
-    services.gnome.evolution-data-server.enable = true;
 
     # Environment variables for proper theming
     environment.sessionVariables = {
@@ -127,7 +140,6 @@
       GI_TYPELIB_PATH = lib.makeSearchPath "lib/girepository-1.0" (
         with pkgs;
         [
-          evolution-data-server
           libical
           glib.out
           libsoup_3
@@ -139,21 +151,18 @@
 
     # Install GNOME apps and system utilities
     environment.systemPackages = with pkgs; [
-      # GNOME apps to keep
-      ptyxis # Terminal
+      # Terminal
+      ptyxis
 
       # Thunar file manager
       xfce.thunar
       xfce.thunar-volman # Removable media support
       xfce.thunar-archive-plugin # Archive support
+
+      # GNOME utilities
       baobab # Disk usage analyzer
-      loupe # Image viewer (GNOME's new image viewer)
-      papers # Document viewer (Evince replacement)
-
-      nautilus # Alternate file manager
-
-      # Fallback terminal
-      gnome-console
+      loupe # Image viewer
+      papers # Document viewer
 
       # Python for calendar support
       (python3.withPackages (pyPkgs: with pyPkgs; [ pygobject3 ]))

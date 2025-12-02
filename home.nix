@@ -45,7 +45,7 @@ in
 
   # Import module configurations
   imports = [
-    try.homeManagerModules.default
+    try.homeModules.default
     ./modules/home/shell.nix
     ./modules/home/clipboard.nix
     ./modules/home/thunar.nix
