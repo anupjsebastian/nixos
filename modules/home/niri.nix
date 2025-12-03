@@ -447,6 +447,7 @@ in
             }
             { id = "Tray"; }
             { id = "Volume"; }
+            { id = "Brightness"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
             { id = "NotificationHistory"; }
