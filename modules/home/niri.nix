@@ -206,6 +206,10 @@ in
           "--new-window"
         ];
         "Mod+B".action.spawn = [ "google-chrome-stable" ];
+        "Mod+M".action.spawn = [
+          "google-chrome-stable"
+          "--app=https://mail.notion.so"
+        ];
         "Mod+T".action.spawn = [
           "ptyxis"
           "-e"
@@ -390,11 +394,11 @@ in
           }
           {
             action = "suspend";
-            enabled = true;
+            enabled = false;
           }
           {
             action = "hibernate";
-            enabled = true;
+            enabled = false;
           }
           {
             action = "reboot";
