@@ -51,7 +51,10 @@ in
         };
       };
 
-      # Thunderbolt dock DisplayPort (commented out - use if dock is stable)
+      # Explicitly disable Thunderbolt dock DisplayPort
+      outputs."DP-5".enable = false;
+
+      # Thunderbolt dock DisplayPort config (if needed later)
       # outputs."DP-5" = {
       #   scale = 1.5;
       #   mode = {
@@ -427,6 +430,21 @@ in
             enabled = false;
           }
         ];
+      };
+
+      osd = {
+        enabled = true;
+        location = "top_center";
+        autoHideMs = 2000;
+        overlayLayer = true;
+        backgroundOpacity = 1;
+        enabledTypes = [
+          0
+          1
+          2
+          3
+        ];
+        monitors = [ ];
       };
 
       bar = {
