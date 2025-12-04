@@ -42,14 +42,24 @@ in
       };
 
       # Output/display configuration
-      outputs."DP-5" = {
+      outputs."HDMI-A-1" = {
         scale = 1.5;
         mode = {
           width = 3840;
           height = 2160;
-          refresh = 240.0;
+          refresh = 120.0;
         };
       };
+
+      # Thunderbolt dock DisplayPort (commented out - use if dock is stable)
+      # outputs."DP-5" = {
+      #   scale = 1.5;
+      #   mode = {
+      #     width = 3840;
+      #     height = 2160;
+      #     refresh = 240.0;
+      #   };
+      # };
 
       # Layout configuration
       layout = {
