@@ -29,6 +29,7 @@
     ../../modules/apps/obsidian.nix
     ../../modules/apps/vlc.nix
     ../../modules/apps/bitwig.nix
+    ../../modules/apps/bazecor.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
