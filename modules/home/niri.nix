@@ -206,6 +206,10 @@ in
           "--new-window"
         ];
         "Mod+B".action.spawn = [ "google-chrome-stable" ];
+        "Mod+A".action.spawn = [
+          "google-chrome-stable"
+          "--app=https://chatgpt.com/"
+        ];
         "Mod+M".action.spawn = [
           "google-chrome-stable"
           "--app=https://mail.notion.so"
