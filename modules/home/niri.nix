@@ -195,9 +195,10 @@ in
             "timeout"
             "900"
             "niri msg action power-off-monitors"
-            "timeout"
-            "1800"
-            "noctalia-shell ipc call lockScreen lock"
+            # Commenting out auto lock until issue with locking is resolved
+            # "timeout"
+            # "1800"
+            # "noctalia-shell ipc call lockScreen lock"
             "resume"
             "niri msg action power-on-monitors"
           ];
@@ -522,34 +523,6 @@ in
         analogClockInCalendar = false;
         firstDayOfWeek = -1;
       };
-    };
-  };
-
-  # Workaround for noctalia-shell glitch after long idle periods
-  # Restart noctalia-shell at 2am and 6am to prevent overnight issues
-  systemd.user.services.noctalia-shell-restart = {
-    Unit = {
-      Description = "Restart noctalia-shell periodically to prevent glitched out screen after long idle periods";
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.systemd}/bin/systemctl --user restart noctalia-shell.service";
-    };
-  };
-
-  systemd.user.timers.noctalia-shell-restart = {
-    Unit = {
-      Description = "Timer to restart noctalia-shell at 2am and 6am";
-    };
-    Timer = {
-      OnCalendar = [
-        "*-*-* 01:00:00"
-        "*-*-* 05:00:00"
-      ];
-      Persistent = true;
-    };
-    Install = {
-      WantedBy = [ "timers.target" ];
     };
   };
 
