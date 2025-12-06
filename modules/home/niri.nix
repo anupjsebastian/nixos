@@ -195,10 +195,9 @@ in
             "timeout"
             "900"
             "niri msg action power-off-monitors"
-            # Commenting out auto lock until issue with locking is resolved
-            # "timeout"
-            # "1800"
-            # "noctalia-shell ipc call lockScreen lock"
+            "timeout"
+            "1800"
+            "noctalia-shell ipc call lockScreen lock"
             "resume"
             "niri msg action power-on-monitors"
           ];
@@ -213,6 +212,13 @@ in
         "Mod+E".action.spawn = noctalia "launcher emoji";
         "Mod+Shift+Return".action.spawn = [ "clipboard-history" ];
         "Mod+Shift+C".action.spawn = noctalia "launcher calculator";
+
+        # Lock screen recovery - can be triggered even when locked
+        # This helps recover from noctalia lock screen crashes (red screen)
+        "Mod+Alt+L" = {
+          action.spawn = noctalia "lockScreen lock";
+          allow-when-locked = true;
+        };
 
         # Applications
         "Mod+Return".action.spawn = [
