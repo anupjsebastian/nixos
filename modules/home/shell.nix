@@ -47,6 +47,12 @@
     enableZshIntegration = true;
   };
 
+  # Zoxide - smarter cd command
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   # CLI utilities
   home.packages = with pkgs; [
     fastfetch
