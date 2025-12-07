@@ -1,5 +1,11 @@
 { pkgs, ... }:
 {
+  # Video thumbnail support for Thunar
+  home.packages = with pkgs; [
+    ffmpegthumbnailer
+    xfce.xfconf # xfconf daemon and tools for settings persistence
+  ];
+
   # Thunar custom actions configuration
   # This manages ~/.config/Thunar/uca.xml
   xdg.configFile."Thunar/uca.xml" = {

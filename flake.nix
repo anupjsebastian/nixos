@@ -24,6 +24,11 @@
       url = "github:tobi/try";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    bitwig = {
+      url = "github:polygon/audio.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -35,6 +40,7 @@
       niri,
       noctalia,
       try,
+      bitwig,
     }:
     let
       system = "x86_64-linux";
@@ -47,6 +53,7 @@
       pkgs = import nixpkgs {
         system = system;
         config.allowUnfree = true;
+        overlays = [ bitwig.overlays.default ];
       };
       unstablePkgs = import nixpkgs-unstable {
         system = system;
@@ -85,6 +92,7 @@
             niri
             unstablePkgs
             desktop
+            bitwig
             ;
         };
       };

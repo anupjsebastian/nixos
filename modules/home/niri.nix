@@ -42,14 +42,27 @@ in
       };
 
       # Output/display configuration
-      outputs."DP-5" = {
+      outputs."HDMI-A-1" = {
         scale = 1.5;
         mode = {
           width = 3840;
           height = 2160;
-          refresh = 240.0;
+          refresh = 120.0;
         };
       };
+
+      # Explicitly disable Thunderbolt dock DisplayPort
+      outputs."DP-5".enable = false;
+
+      # Thunderbolt dock DisplayPort config (if needed later)
+      # outputs."DP-5" = {
+      #   scale = 1.5;
+      #   mode = {
+      #     width = 3840;
+      #     height = 2160;
+      #     refresh = 240.0;
+      #   };
+      # };
 
       # Layout configuration
       layout = {
@@ -107,7 +120,7 @@ in
           };
           clip-to-geometry = true;
         }
-        # Fix Nautilus titlebar rendering issues
+        # Nautilus: always open at 40% width
         {
           matches = [
             { app-id = "^org\\.gnome\\.Nautilus$"; }
@@ -135,15 +148,6 @@ in
           ];
           default-column-width = {
             proportion = 0.7;
-          };
-        }
-        # Bitwig Studio: always open at 100% width
-        {
-          matches = [
-            { app-id = "^com\\.bitwig\\.BitwigStudio$"; }
-          ];
-          default-column-width = {
-            proportion = 1.0;
           };
         }
       ];
@@ -175,6 +179,10 @@ in
       # Startup applications
       spawn-at-startup = [
         {
+          command = [ "xwayland-satellite" ];
+        }
+
+        {
           command = [
             "nm-applet"
             "--indicator"
@@ -185,7 +193,7 @@ in
             "swayidle"
             "-w"
             "timeout"
-            "300"
+            "900"
             "niri msg action power-off-monitors"
             "timeout"
             "1800"
@@ -205,12 +213,27 @@ in
         "Mod+Shift+Return".action.spawn = [ "clipboard-history" ];
         "Mod+Shift+C".action.spawn = noctalia "launcher calculator";
 
+        # Lock screen recovery - can be triggered even when locked
+        # This helps recover from noctalia lock screen crashes (red screen)
+        "Mod+Alt+L" = {
+          action.spawn = noctalia "lockScreen lock";
+          allow-when-locked = true;
+        };
+
         # Applications
         "Mod+Return".action.spawn = [
           "ptyxis"
           "--new-window"
         ];
         "Mod+B".action.spawn = [ "google-chrome-stable" ];
+        "Mod+A".action.spawn = [
+          "google-chrome-stable"
+          "--app=https://chatgpt.com/"
+        ];
+        "Mod+M".action.spawn = [
+          "google-chrome-stable"
+          "--app=https://mail.notion.so"
+        ];
         "Mod+T".action.spawn = [
           "ptyxis"
           "-e"
@@ -316,6 +339,7 @@ in
 
         # Overview
         "Mod+Escape".action."toggle-overview" = [ ];
+        "Mod+Backslash".action."toggle-overview" = [ ];
 
         # System controls
         "Mod+Shift+E".action."power-off-monitors" = [ ];
@@ -345,6 +369,7 @@ in
     # Noctalia settings with Tokyo Night theme
     settings = {
       dock.enabled = false;
+      network.wifiEnabled = false;
 
       general = {
         animationDisabled = false;
@@ -393,11 +418,11 @@ in
           }
           {
             action = "suspend";
-            enabled = true;
+            enabled = false;
           }
           {
             action = "hibernate";
-            enabled = true;
+            enabled = false;
           }
           {
             action = "reboot";
@@ -412,6 +437,21 @@ in
             enabled = false;
           }
         ];
+      };
+
+      osd = {
+        enabled = true;
+        location = "top_center";
+        autoHideMs = 2000;
+        overlayLayer = true;
+        backgroundOpacity = 1;
+        enabledTypes = [
+          0
+          1
+          2
+          3
+        ];
+        monitors = [ ];
       };
 
       bar = {
@@ -445,6 +485,8 @@ in
               diskPath = "/";
             }
             { id = "Tray"; }
+            { id = "Volume"; }
+            { id = "Brightness"; }
             { id = "WiFi"; }
             { id = "Bluetooth"; }
             { id = "NotificationHistory"; }
@@ -497,6 +539,7 @@ in
     swayidle
     networkmanagerapplet
     tokyonight-gtk-theme
+    xwayland-satellite
 
     # Color picker with desktop entry
     (pkgs.writeShellScriptBin "color-picker" ''

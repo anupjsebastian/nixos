@@ -6,6 +6,10 @@
     enable = true;
     enableCompletion = true;
 
+    shellAliases = {
+      nrs = "sudo nixos-rebuild switch --flake /home/anupjsebastian/nixos#nyx";
+    };
+
     # Yazi shell wrapper function to cd to the directory on exit
     initExtra = ''
       # VTE (GNOME Terminal/Ptyxis) integration for directory tracking
@@ -41,6 +45,12 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+  };
+
+  # Zoxide - smarter cd command
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
   };
 
   # CLI utilities
