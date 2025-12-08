@@ -51,6 +51,10 @@
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
+    # Override 'cd' command with zoxide (also creates 'cdi' for interactive mode)
+    options = [
+      "--cmd cd"
+    ];
   };
 
   # CLI utilities
