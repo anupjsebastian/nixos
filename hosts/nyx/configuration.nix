@@ -31,6 +31,7 @@
     ../../modules/apps/bitwig.nix
     ../../modules/apps/bazecor.nix
     ../../modules/apps/ticktick.nix
+    ../../modules/apps/zoom.nix
 
     ## Development tools
     ../../modules/dev/rust.nix
@@ -56,7 +57,7 @@
   # Automatic garbage collection
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    dates = "monthly";
     options = "--delete-older-than 30d";
   };
 

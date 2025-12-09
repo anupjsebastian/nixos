@@ -523,7 +523,7 @@ in
         weatherShowEffects = true;
         useFahrenheit = true;
         use12hourFormat = false;
-        showWeekNumberInCalendar = false;
+        showWeekNumberInCalendar = true;
         showCalendarEvents = false;
         showCalendarWeather = true;
         analogClockInCalendar = false;
