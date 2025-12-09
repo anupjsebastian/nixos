@@ -520,6 +520,10 @@ in
         generateTemplatesForPredefined = true;
       };
 
+      wallpaper = {
+        directory = "/home/anupjsebastian/nixos/wallpapers";
+      };
+
       appLauncher = {
         enableClipboardHistory = false;
         enableClipPreview = false;
