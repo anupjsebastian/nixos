@@ -46,31 +46,31 @@ in
         size = 24;
       };
 
-      outputs."HDMI-A-1".enable = false;
+      outputs."HDMI-A-1".enable = true;
 
       # Output/display configuration
       # TODO: Configure for new system - uncomment and adjust as needed
-      # outputs."HDMI-A-1" = {
-      #   scale = 1.5;
-      #   mode = {
-      #     width = 3840;
-      #     height = 2160;
-      #     refresh = 120.0;
-      #   };
-      # };
-
-      # Explicitly disable Thunderbolt dock DisplayPort
-      outputs."DP-5".enable = true;
-
-      # Thunderbolt dock DisplayPort config (if needed later)
-      outputs."DP-5" = {
+      outputs."HDMI-A-1" = {
         scale = 1.5;
         mode = {
           width = 3840;
           height = 2160;
-          refresh = 240.0;
+          refresh = 120.0;
         };
       };
+
+      # Explicitly disable Thunderbolt dock DisplayPort
+      # outputs."DP-5".enable = true;
+
+      # Thunderbolt dock DisplayPort config (if needed later)
+      # outputs."DP-5" = {
+      # scale = 1.5;
+      # mode = {
+      # width = 3840;
+      # height = 2160;
+      # refresh = 240.0;
+      # };
+      # };
 
       # Layout configuration
       layout = {
