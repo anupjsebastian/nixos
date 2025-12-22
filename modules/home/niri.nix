@@ -29,9 +29,11 @@ in
         keyboard.xkb.layout = "us";
 
         touchpad = {
-          tap = true;
+          tap = false;
           natural-scroll = true;
-          accel-speed = 0.3;
+          accel-speed = 0.5;
+          accel-profile = "adaptive";
+          scroll-method = "two-finger";
         };
 
         mouse = {
